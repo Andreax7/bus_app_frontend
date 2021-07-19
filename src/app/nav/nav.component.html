@@ -1,0 +1,68 @@
+
+  <mat-toolbar>
+    <div fxFlex fxLayout fxLayoutAlign="end">
+       
+        <ul fxLayout fxLayoutGap="15px" class="nav">
+            <li class="navbar-item" routerLink="/home">
+                <img width="100%" height="60px" alt="BusLogo" src="assets/images/logo.PNG"/>
+            </li>
+            <li>    <a class="navbar-item" routerLink="/timetable">Timetable</a> </li>
+            <li>   <a class="navbar-item"  routerLink="/about">About Us</a> </li>
+            <li>   <a class="navbar-item" (click) ="show()" >Login</a> </li>
+        </ul>
+    </div>
+    <div [style.display]="showModal ? 'grid' : 'none'" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title" id="myModalLabel">Login 
+              <button type="button" class="btn-dark" data-dismiss="modal" (click) = "hide()">x</button>
+              </h2>
+            </div>
+              <form [formGroup]="loginForm" (ngSubmit)="submit()" >
+               
+                 <div class="form-group row">
+                  
+                  <label>Username</label>
+                  <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted || loginForm.controls.username.errors }" id="username" (change)="UsernameUnique()" />
+                          
+                    <div *ngIf="loginForm.controls.username.errors && loginForm.controls.username.touched" class="invalid-feedback col-4">
+                      Username is required                      
+                    </div>
+                    <div class="invalid-feedback col-4">
+                        {{ unexists }}                      
+                    </div>
+                  </div>
+          
+               
+                  <div class="form-group row">
+                        <label>Password</label>
+                      <input type="password" formControlName="password" class="form-control col-4" [ngClass]="{ 'is-invalid': submitted || loginForm.controls.password.errors }" />
+                                     
+                      <div *ngIf="loginForm.controls.password.errors" class="invalid-feedback col-4">
+                      <div *ngIf="loginForm.controls.password.errors && loginForm.controls['password'].touched">Password is required
+                      </div>
+                      <div *ngIf="loginForm.controls.password.errors?.minlength">Password must be at least 6 characters
+                      </div>
+                    
+                    </div>
+                   </div>
+          
+
+                    
+                  <div class="form-group form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="remember"> Forgot Your Password?
+                      </label>
+                  </div>
+                 
+                    <button type="submit" [disabled]="!loginForm.valid" class="btn">Submit</button>
+            </form>
+          
+          </div>
+       </div> 
+    </div> 
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
