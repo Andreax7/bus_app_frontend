@@ -1,4 +1,5 @@
 
+import { invalid } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
@@ -15,19 +16,18 @@ export class NavComponent implements OnInit {
   loginForm: FormGroup;
   showModal = false;
   submitted = false;
-  public unexists = "";
+  public unexists!: string;
 
   constructor( private formBuilder: FormBuilder,
               public authService: AuthService) { 
       
           this.loginForm = this.formBuilder.group({
-          username: ['', Validators.required],
+          username: ['',  [Validators.required]],
           password: ['', [Validators.required]]
                 });
   }
 
- ngOnInit() {  
-
+ ngOnInit() { 
   }
 
   show(){
@@ -47,8 +47,9 @@ export class NavComponent implements OnInit {
         if( response == 'true' ){
           this.unexists = ' ';
         };
-        if( response == 'false' ){ 
+        if( response === 'false' ){ 
           this.unexists = 'User does not exist';
+          this.loginForm.controls.username.setErrors({'invalid': true});
         }
       }
     );
@@ -59,15 +60,11 @@ export class NavComponent implements OnInit {
     const password = this.loginForm.controls['password'].value;
     if(this.loginForm.valid)
       {
-        this.authService.getAuthToken(username, password).subscribe(
-            response => {
-              console.log(response)
-            }
-          );
-        this.authService.login(username, password).subscribe(
-          response => {
-            console.log(response)
-          })
+        this.authService.login(username, password)//.subscribe(
+   //       response => {
+     //       console.log(response)
+    //      });    
+        
       }
    }
   

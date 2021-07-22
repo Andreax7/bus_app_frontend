@@ -30,6 +30,7 @@ import { AboutComponent } from './about/about.component';
 import { GetTicketComponent } from './get-ticket/get-ticket.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     NgbModule,
   
   ],
-  providers: [ AuthService, TimetableService ],
+  providers: [ AuthService, TimetableService, AuthInterceptor ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -106,12 +106,14 @@ img{
     font-family: 'Reggae One', cursive;
     position:relative;
     bottom:5%;
-    left:50%;
+    left:27%;
     background-color:rgba(19, 139, 103, 0.8);
     border:none;
     color:rgb(212, 255, 19);
     padding: 15px;
     font-size: 16px;
+    width: 180px;
+    height: 50px;
  }
  .btn:hover{
     box-shadow: 0 0 10px mediumaquamarine;
@@ -122,19 +124,22 @@ img{
  .btn:disabled{
      background-color:rgba(33, 110, 87, 0.8);
      color:rgb(184, 92, 17);
- }
+     width: 200px;
+     height: 50px;
+  }
  .modal-content{
     background-color:rgba(19, 139, 103, 0.5);
     color:rgb(212, 255, 19);
     position: relative;
     flex-direction: column;
-    width: 750px;
+    width: 600px;
     pointer-events: auto;
     outline: 0;
     top: 5%;
-    left: 50%;
+    left: 80%;
     box-shadow:0 0 40px -10px #000;
     background-color: rgba(20, 85, 71, 0.5);
+    margin-left:10px;
  }
 .modal{
     margin: 2em auto;
@@ -143,19 +148,22 @@ img{
     padding: 10px;
     border-radius: 10px;
     font-family: 'Reggae One', cursive;
-    width:100%;
-    height:100%;
+    width:90%;
+    height:60%;
     position: fixed;
  }
 
 form{
     margin-top:30px;
     padding: 15px;
-    width:550px;
-    height:250px;
+    width:700px;
+    height:300px;
+    display:grid;
+  
 }
 label{
     padding-right:15px;
+    width:20%;
 }
 input{
     background-color:rgba(19, 139, 103, 0.8);
@@ -164,15 +172,21 @@ input{
     font-size:18px;
     font-family: 'Reggae One', cursive;
     border: solid 0.7px palegreen;
+    height: 40px;
+    width:50%;
 }
-input:invalid{
-    border: solid 0.7px rgba(211, 115, 5, 0.856);
-}
+
 .invalid-feedback{
     color:rgb(243, 166, 1);
     font-size:18px;
-    position:relative;
-    right:0;
+    width:50%;
+
+}
+#invalid{
+    color:rgb(243, 166, 1);
+    font-size:18px;
+    width:50%;
+
 }
 .form-group{
     padding-left:10px;
