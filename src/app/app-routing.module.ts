@@ -12,8 +12,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'timetable', component: TimetableComponent },
-  { path: 'profile', component: UserPanelComponent, canActivate:[AuthGuard] },
-  { path: 'page-admin', component: AdminPanelComponent, canActivate:[AuthGuard] }
+  { path: 'profile', component: UserPanelComponent, canActivate : [AuthGuard] },
+  { path: 'admin', component: AdminPanelComponent, canActivate : [AuthGuard] }
 ];
 
 @NgModule({

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from './user';
 import { AuthService } from '../auth.service';
+import { PassMatchValidator } from './passMatch';
 
 
 
@@ -20,7 +21,6 @@ export class RegisterComponent implements OnInit{
   emailPattern = "^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   passwordPattern = "^[A-Za-z0-9._*+-]{8,}$";
   PassMatch = '';
- 
 
   constructor(public formBuilder: FormBuilder,
               private AuthService: AuthService) {
@@ -29,18 +29,12 @@ export class RegisterComponent implements OnInit{
                   first_name: ['', Validators.required],
                   last_name: ['', Validators.required ],                
                   email: ['',  [Validators.required, Validators.pattern(this.emailPattern)] ], 
-                  password: ['', [Validators.required,  Validators.pattern(this.passwordPattern)]],
+                  password: ['', [Validators.required,  Validators.pattern(this.passwordPattern)], [PassMatchValidator('password', 'password2')]],
                   password2:['', [ Validators.required]],
                   role:[''],
               })
+    
               }
-
-  PassCheck(){(registerForm: FormGroup) => { 
-    var password =registerForm.controls['password'].value;
-    var confirmPassword = registerForm.controls['password2'].value;
-    console.log('pass provjera');
-    return password === confirmPassword ? this.PassMatch = '' : this.PassMatch = 'Password not matching';     
-  }}
 
   UsernameUnique() {
                 var username = this.registerForm.controls['username'].value;
@@ -72,9 +66,9 @@ export class RegisterComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.PassCheck();
- 
+
   }
+
   EmailUnique() {
     var email = this.registerForm.controls['email'].value;
     this.AuthService.checkEmail(email)

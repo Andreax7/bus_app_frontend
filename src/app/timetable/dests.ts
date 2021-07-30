@@ -1,6 +1,7 @@
 export class Dests {
     constructor(
         public id: number,
+        public line_no :number,
         public zone: string,
         public dfrom: string,
         public dto: string,

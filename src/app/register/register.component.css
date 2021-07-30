@@ -1,22 +1,77 @@
 form{
     justify-content: space-evenly;
     margin: 5px;
-    background-color: rgba(128, 128, 128, 0.568);
+    background-color: rgba(31, 88, 62, 0.4);
     padding: 2px;
-    width:max-content;
+    width:85%;
+    border-radius: 2%;
 }
 
 #register{
-    width:max-content;
+    width: 100%;
+    margin: 10px;
 }
+
+.header{
+    font-family: 'Reggae One', cursive;
+    font-size: 20px;
+    color:rgb(212, 255, 19);
+    border-bottom: 1px solid rgba(241, 239, 145, 0.473);
+ }
 .row{
-    width:max-content;
-   
+    width:120%; 
 }
 
 input{
     width: 200px;
     padding-left:10px;
     margin-left:20px;
+    background-color:rgba(33, 110, 87, 0.8);
+    border:0.1px solid rgb(177, 238, 128);
+    margin-bottom: 5px;
+    height:32px;
+    color:rgb(108, 199, 34);
+}
+input::placeholder{
+    color:rgb(229, 255, 0);
 }
 
+input:focus{
+    width: 200px;
+    padding-left:10px;
+    margin-left:20px;
+    background-color:rgba(33, 110, 87, 0.8);
+    border:0.1px solid palegreen;
+    margin-bottom: 5px;
+    height:32px;
+    color:rgb(108, 199, 34);
+}
+
+.btn{
+    font-family: 'Reggae One', cursive;
+    position:relative;
+    bottom:5%;
+    left:27%;
+    background-color:rgba(19, 139, 103, 0.8);
+    border:none;
+    color:rgb(212, 255, 19);
+    padding: 10px;
+    font-size: 16px;
+    width:150px;
+    height: 43px;
+ }
+ .btn:hover{
+    box-shadow: 0 0 10px mediumaquamarine;
+    transition: 2s ease;
+    background-color:rgba(14, 185, 114, 0.705);
+    cursor: pointer;
+ }
+ 
+ .btn:disabled{
+     background-color:rgba(33, 110, 87, 0.8);
+     color:rgb(184, 92, 17);
+     width: 150px;
+     height: 43px;
+     margin-top:10px;
+     margin-left:25px;
+  }

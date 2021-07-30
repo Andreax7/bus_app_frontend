@@ -9,13 +9,58 @@
    </div>
  
 <div class="content">
+        
 <div class="row">
    <div class="col-6">
-      <app-register> </app-register>
-   </div>
-    <div class="col-6">
-       <p>Hey </p>
+      <div class="ticket-info">
+         <h3 id="tic">TICKETS</h3>
+         
+           <h4>  Get your tickets fast and easy</h4>   
+            <h5 (click) ="show1()">....click to read more ...</h5>    
+           <div class="ticketintro" [style.display]="showticketinfo ? 'grid' : 'none'"> 
+              <p> Choose when you want to use the ticket<br>
+                  Choose the ticket type and travel area(zone)<br>
+                  If you travel with friends your ticket can be valid for them too,<br> just choose the amount of tickets
+                  Get the ticket and enjoy the ride!
+               </p>    
+               <p> NOTE:<br>
+                  Two ticket types are available:<br>
+                  for 2 hours or for the whole day (24h from activation time which you choose)<br>
+                  Price depends also on the choosen zone or area(suburbs /city center).
+               </p>
+      
+         </div>
+      </div>
+         <div class="showform">
+         <app-get-ticket> </app-get-ticket>
+         </div>
     </div>
-    
+   <div class="col-6">
+      
+      <div class="register-info">
+         <h3 id="sub">SUBSCRIPTIONS</h3>
+            <h4>   Sign Up for subscription 
+               <span  class="material-icons" id="subscard"> credit_card</span>
+            </h4>
+            <h5 (click) ="show2()">....click to read more ...</h5>   
+      <div class="reginfo2" [style.display]="showsubinfo ? 'grid' : 'none'">
+      <p> Get your Subscription card for unlimited bus rides for chosen period <br>
+          How Subscription Card works? <br> 
+      
+          Make an account here and login with your new account<br>
+            On your profile fill the data to get the Card <br>
+            It is possible to get the bus tickets too! <br>
+            You will have the overview of your cards and tickets<br>
+        NOTE: Prices can vary from each period 
+      </p>
+
+      </div>
+      </div>
+      <div class="showform">
+      <app-register> </app-register>
+      </div>
+   </div>
+        
 </div>
+
 </div>

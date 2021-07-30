@@ -1,1 +1,41 @@
-<h1>user-panel works!</h1>
+<div class="grid">
+<div class="content" *ngFor="let u of user">
+    <h3 id="header"> Welcome {{u.first_name}}</h3>
+        <div *ngIf="isadmin" class="row"> <h5> You have admin permissions, click the button to visit admin page </h5> 
+                        <button class="btn" routerLink="/admin"> Admin page </button> 
+        </div>
+    <div class="row">
+    <div class="col-6">
+        <h4> My Info </h4> 
+            <div class="photo" *ngIf="response && imageURL">
+            My photo: {{ u.picture }}<button class="btn"> Edit </button>
+            
+                <img [src]='imageURL' />
+                
+              
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              
+                  <input type="file" name="profile" (change)="onChange($event)" />
+                  <button type="submit">Upload </button>
+              
+                </form>
+             </div>
+        <button class="btn" (click) ="showinfo()" > Show details </button> 
+        <ul [style.display]="myinfo ? 'block' : 'none'" >
+                <li> UID: {{ u.id}}</li>
+                <li>First name: {{ u.username}}</li>
+                <li>email: {{ u.email}}</li>
+                <li>First name: {{ u.first_name}}</li>
+                <li>Last name: {{ u.last_name}}</li>
+                <li>Address: {{ u.address}}</li>
+                <li>Role: {{ u.role}}</li>
+                
+        </ul>   
+    </div>
+        <div class="col-6">
+            <h4>My Cards</h4>
+
+        </div>
+    </div>
+</div>
+</div>

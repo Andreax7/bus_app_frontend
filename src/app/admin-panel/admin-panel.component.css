@@ -1,0 +1,140 @@
+.content{
+    margin:20px;
+    padding:0;
+    font-family: 'Alice', serif;
+}
+
+#desttable{
+    width:80%;
+}
+
+.modal-title{
+    font-family: 'Reggae One', cursive;
+    font-size: 26px;
+    color:rgb(212, 255, 19);
+ }
+ 
+ .modal-header{
+    display: inline-block;
+    width:100%;
+ }
+
+ .modal-content{
+    background-color:rgba(19, 139, 103, 0.5);
+    color:rgb(212, 255, 19);
+    position: relative;
+    flex-direction: column;
+    width: 650px;
+    height:500px;
+    pointer-events: auto;
+    outline: 0;
+    top: 5%;
+    box-shadow:0 0 40px -10px #000;
+    background-color: rgba(20, 85, 71, 0.7);
+    margin-left: 10px;
+    font-family: 'Alice', serif;
+ }
+.modal{
+    width:90%;
+    height:70%;
+}
+
+ .btn-dark{
+    position: absolute;
+    background-color:rgba(19, 139, 103, 0.8);
+    border-radius: 20px;
+    left: 90%;
+    padding:8px;
+    padding-left:15px;
+    padding-right:15px;
+    color:rgb(212, 255, 19);
+    border:none;
+    font-weight: bolder;
+ }
+ .btn-dark:hover{
+    box-shadow: 0 0 10px mediumaquamarine;
+    transition: 2s ease;
+    background-color:rgba(14, 185, 114, 0.705);
+    cursor: pointer;
+ }
+ .btn{
+    font-family: 'Reggae One', cursive;
+    background-color:rgba(19, 139, 103, 0.8);
+    border:none;
+    color:rgb(212, 255, 19);
+    font-size: 16px;
+    width: 100px;
+    height: 35px;
+ }
+ #update{
+     position: relative;
+     left:30%;
+ }
+ .btn:hover{
+    box-shadow: 0 0 10px mediumaquamarine;
+    transition: 2s ease;
+    background-color:rgba(14, 185, 114, 0.705);
+    cursor: pointer;
+ }
+ .btn:disabled{
+     background-color:rgba(33, 110, 87, 0.8);
+     color:rgb(184, 92, 17);
+     width: 200px;
+     height: 50px;
+  }
+
+th,td{
+    font-size: 20px;
+    text-align: center;
+}
+
+form{
+    margin-top:30px;
+    padding: 15px;
+    width:700px;
+    height:300px;
+  
+}
+label{
+    padding-right: 15px;
+    width:35%;
+    font-size:20px;
+    font-family: 'Alice', serif;
+}
+
+input::placeholder{
+    color:rgb(108, 199, 34);
+    font-size: 16px;
+}
+input{
+    background-color:rgba(19, 139, 103, 0.8);
+    color:rgb(226, 167, 40);
+    padding:5px;
+    font-size:20px;
+    font-family: 'Reggae One', cursive;
+    border: solid 0.7px palegreen;
+    height: 40px;
+    width: 45%;
+}
+input:focus{
+    background-color:rgba(19, 139, 103, 0.8);
+    color:rgb(108, 199, 34);
+}
+
+.invalid-feedback{
+    color:rgb(243, 166, 1);
+    font-size:18px;
+    width:50%;
+
+}
+#invalid{
+    color:rgb(243, 166, 1);
+    font-size:18px;
+    width:50%;
+
+}
+.form-group{
+    padding-left:10px;
+    padding-right:20px;
+    padding-bottom: 20px;
+}

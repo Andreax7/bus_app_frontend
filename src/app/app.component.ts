@@ -8,8 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'StBus_app';
 
-  ngOnInit() {
-  const token = localStorage.getItem("token");
-//  const user = JSON.parse(localStorage.getItem("user"));
-}
+  
+
+  ngOnInit() {}
+  
 }

@@ -1,1 +1,102 @@
-<p>admin-panel works!</p>
+<div class="content">
+<div class="grid">
+    <h3>Welcome to administration page </h3>
+
+
+    <div class="row">
+        <div class="col-6">
+        <h5>Departures</h5>
+        <table id="desttable">
+            <thead>
+               <tr>
+                <th>ZONE</th>
+                <th>LINE NO.</th>
+                <th>DESTINATION </th>
+                <th>ACTIVE</th>
+                <th>DETAILS</th>
+                <th>DELETE</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let dest of dest">
+                  <td>{{ dest.zone }}</td>
+                  <td>{{ dest.line_no }}</td>
+                  <td>{{ dest.dest_name }}</td>
+                  <td>
+                      <input *ngIf="!dest.active" type="checkbox" (change)="Activity(dest.id,{'active':'true'})" />
+                      <input *ngIf="dest.active" type="checkbox" checked (change)="Activity(dest.id,{'active':'false'})" />
+                 </td>
+                  <td>
+                    <button class="btn btn-lg btn-outline-primary" (click) = "show(dest.id)">Edit</button>
+                  </td>                   
+               </tr>
+            </tbody>
+         </table>
+         </div>
+
+         <div class="col-6">
+            <h5>Timetable</h5>
+            <table id="timetable">
+                <thead>
+                   <tr>
+                    <th>WEEKENDS</th>
+                    <th>WORKING DAYS</th>
+                    <th>DELETE</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>                   
+                   </tr>
+                </tbody>
+             </table>
+        </div>
+<!-- Modal form for editing each destination -->
+        <div [style.display]="showModal ? 'grid' : 'none'" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabel">Edit destination
+                <button type="button" class="btn-dark" data-dismiss="modal" (click) = "hide()">x</button>
+                </h2>
+                </div>
+                <form [formGroup]="destForm" (ngSubmit)="UpdateDest(onedest.id)"> 
+                    <div class="form-group row">
+                        <label class="col-6">Full destination name:</label>
+                        <input *ngIf="showModal" placeholder="{{onedest.dest_name}}" type="text" formControlName="dest_name" class="form-control col-4"/>          
+                    </div>
+                    <div class="form-group row">
+                                <label class="col-12">Zone number:</label>
+                            <input *ngIf="showModal" placeholder="{{onedest.zone}}" type="text" formControlName="zone" class="form-control col-4" />
+                    </div> 
+                    <div class="form-group row">
+                        <label class="col-12">Line number:</label>
+                    <input *ngIf="showModal" placeholder="{{onedest.line_no}}" type="text" formControlName="line_no" class="form-control col-4" />
+                    </div>    
+                    <div class="form-group row">
+                        <label class="col-12">Starting station:</label>
+                    <input *ngIf="showModal" placeholder="{{onedest.dfrom}}" type="text" formControlName="dfrom" class="form-control col-4" />
+                    </div> 
+                    <div class="form-group row">
+                        <label class="col-12">Finishing station:</label>
+                    <input *ngIf="showModal" placeholder="{{onedest.dto}}" type="text" formControlName="dto"  />
+                    </div> 
+
+                        <button [disabled]="!destForm.valid" type="submit" id="update" class="btn">Update</button>
+                </form>
+            
+            </div>
+        </div> 
+        </div>
+
+    </div>
+
+
+
+
+
+
+</div>
+</div>

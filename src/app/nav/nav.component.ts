@@ -1,8 +1,8 @@
 
-import { invalid } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,14 +17,17 @@ export class NavComponent implements OnInit {
   showModal = false;
   submitted = false;
   public unexists!: string;
+  error = '';
+  token = '';
 
   constructor( private formBuilder: FormBuilder,
-              public authService: AuthService) { 
-      
+              public authService: AuthService, 
+              public router: Router
+  ){       
           this.loginForm = this.formBuilder.group({
           username: ['',  [Validators.required]],
           password: ['', [Validators.required]]
-                });
+          });
   }
 
  ngOnInit() { 
@@ -37,7 +40,15 @@ export class NavComponent implements OnInit {
     this.showModal = false;
   }
 
- 
+ isLogin(){  
+   if(localStorage.getItem('user')=== null)
+          return false;
+    else 
+          return true;
+    }
+  logout(){
+    this.authService.logout();
+  }
 
   UsernameUnique() {
     var username = this.loginForm.controls['username'].value;
@@ -60,11 +71,17 @@ export class NavComponent implements OnInit {
     const password = this.loginForm.controls['password'].value;
     if(this.loginForm.valid)
       {
-        this.authService.login(username, password)//.subscribe(
-   //       response => {
-     //       console.log(response)
-    //      });    
-        
+        this.authService.login(username, password).subscribe(
+          response => {
+            this.token = response['token'];
+            this.authService.verifyLogin(this.token);
+          },
+          err => {
+            this.loginForm.controls.password.setErrors({'invalid': true})
+            this.error = 'Wrong password';
+          }
+         
+        );         
       }
    }
   

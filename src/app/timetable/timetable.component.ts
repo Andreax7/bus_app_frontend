@@ -21,8 +21,7 @@ export class TimetableComponent implements OnInit {
   }
     
   ngOnInit(): void {
-    this.allDest();
-    
+    this.allDest();  
   }
 
   allDest() {

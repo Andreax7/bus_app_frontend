@@ -21,19 +21,27 @@
 
 #header{
     left:-5%;
-    top:18%;
+    top:16%;
+}
+#header2{
+    left: 75%;
+    top: 37%;
 }
 
 .intro3{
-    position:absolute;
-    top:22%;
+    position:relative;
+    top: 45%;
     font-family: 'Reggae One', cursive;
-    left: 20%;
+    left: 0%;
+    height:35%;
+    margin-top:10px;
+    width:100%;
+    
+
 
 }
 table{
     position: absolute;
-
     font-size: 18px;
     top: 35%;
 }
@@ -43,6 +51,8 @@ table, thead, th, tr{
 }
 th{
     border-bottom:solid 0.5px  rgb(22, 75, 48);
+    font-family: 'Abril Fatface', cursive;
+    letter-spacing: 2px;
 }
 span{
     padding:10px;
@@ -50,14 +60,17 @@ span{
 
 #timetable{
     position:absolute;
-    right:10%; 
-    top:40%; 
+    right:0%; 
+    top:47%; 
+    align-items: stretch; 
+    
 }
 #desttable{
     position:absolute;
-    left: 5%;
+    left: -2%;
     align-items: stretch; 
-    top:40%; 
+    top: 48%;     
+  
 }
 mat-icon:hover {
     box-shadow: 0 0 10px rgba(31, 53, 46, 0.603);
@@ -96,10 +109,9 @@ mat-icon:hover {
     word-spacing: 5px;
     line-height: 2.5;
     position: absolute;
-    top: 45%;  
+    top: 58%;  
     font-family: 'Reggae One', cursive;
-    left: 10%;
-    font-style: oblique;
+    left: 20%;
     flex:2;
   }
  h3{

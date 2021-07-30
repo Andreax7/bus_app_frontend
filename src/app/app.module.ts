@@ -1,36 +1,31 @@
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { CookieModule } from 'ngx-cookie';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { NavComponent } from './nav/nav.component';
-import { TimetableComponent } from './timetable/timetable.component';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {  NgxMatDatetimePickerModule, NgxMatNativeDateModule }from '@angular-material-components/datetime-picker';
 
-
-
-import { AuthService } from './auth.service';
-import { TimetableService } from './timetable/timetable.service';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { NavComponent } from './nav/nav.component';
+import { TimetableComponent } from './timetable/timetable.component';
 import { RegisterComponent } from './register/register.component';
 import { AboutComponent } from './about/about.component';
 import { GetTicketComponent } from './get-ticket/get-ticket.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+
 import { AuthInterceptor } from './auth.interceptor';
+import { AuthService } from './auth.service';
+import { TimetableService } from './timetable/timetable.service';
+import { TicketsService } from './get-ticket/tickets.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +41,6 @@ import { AuthInterceptor } from './auth.interceptor';
   ],
   imports: [
     BrowserModule,
-    CookieModule.forRoot() ,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -57,11 +51,14 @@ import { AuthInterceptor } from './auth.interceptor';
     MatIconModule,
     MatButtonModule,
     MatTableModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule, 
+
     FlexLayoutModule, 
-    NgbModule,
+    NgbModule, 
   
   ],
-  providers: [ AuthService, TimetableService, AuthInterceptor ],
+  providers: [ AuthService, TimetableService,{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, TicketsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

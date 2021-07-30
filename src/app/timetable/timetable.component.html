@@ -24,6 +24,7 @@
  
     </div>
         <div class="col-6">
+        
         <table id="desttable">
             <thead>
                <tr>
@@ -37,7 +38,7 @@
             <tbody>
                <tr *ngFor="let dests of dests">
                   <td>{{ dests.zone }}</td>
-                  <td>{{ dests.id }}</td>
+                  <td>{{ dests.line_no }}</td>
                   <td>{{ dests.dfrom }}</td>
                   <td>{{ dests.dto}}</td>
                   <td (click)="getDetail(dests.id)">
@@ -48,6 +49,7 @@
          </table>
         </div>
         <div class="col-6">
+            <h3 id="header2"> Timetable </h3>
         <table id="timetable" [style.display]="showTimetable ? 'block' : 'none'">
             <thead>
                 <tr>
