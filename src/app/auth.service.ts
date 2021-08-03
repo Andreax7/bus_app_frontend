@@ -6,8 +6,6 @@ import { Router } from '@angular/router';
 import { User } from './register/user';
 
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -51,11 +49,11 @@ export class AuthService {
   }
 
 // ********Verification******
-  checkUsername(username:string): Observable<any> {
+  checkUsername(username:string) {
    return this.http.get('http://localhost:8000/checkuser/' + username);
   }
 
-  checkEmail(email:string): Observable<any> {
+  checkEmail(email:string) {
     return this.http.get('http://localhost:8000/checkmail/' + email);
    }
 // ***Verification*****
@@ -72,27 +70,19 @@ export class AuthService {
     .subscribe(
       data => {
         localStorage.setItem("user",data['token']); // stores given JWT token in localStorage
-        this.router.navigateByUrl('/profile');
+      //  this.isadmin().subscribe(
+       //   res=>{
+     //         if(res=='true') return this.router.navigate(['/admin']);}); 
+        this.router.navigate(['/profile']);
       },
       err => {
         this.errors = err.error;
+        this.router.navigate(['/profile']);
       }
      
     );
   }
   
-  // Handle errors
-   handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    return throwError(
-      'Something bad happened; please try again later.');
-  }
   
   myprofiledata(): Observable<User[]>{
     return this.http.get<User[]>('http://localhost:8000/myprofile/', {headers:this.headers, withCredentials:true} ).pipe(map(res => res))
@@ -110,14 +100,14 @@ export class AuthService {
   logout(){
     localStorage.removeItem("user");
     localStorage.clear();
-    return this.router.navigate(['/home']);
+    this.router.navigate(['/home']);
   }
 
   upload(formData: any){
     return this.http.post<any>('http://localhost:8000/upload/', formData);
   }
 
-  getAuthToken(){
+  getJWTPayload(){
     return this.http.post<User>('http://localhost:8000/refresh/', {headers:this.headers, withCredentials:true} )
     .pipe(
       map(res => {
@@ -131,19 +121,18 @@ export class AuthService {
     );
   }
 
-
-  private refreshTokenTimeout: any;
-  private startRefreshTokenTimer() {
-    // parse json object from base64 encoded jwt token
-    const jwtToken = JSON.parse(atob(localStorage.getItem("user")!.split('.')[1]));
-
-    // set a timeout to refresh the token a minute before it expires
-    const expires = new Date(jwtToken.exp * 1000);
-    const timeout = expires.getTime() - Date.now() - (60 * 1000);
-    this.refreshTokenTimeout = setTimeout(() => this.getAuthToken().subscribe(), timeout);
+// Handle errors
+handleError(error: HttpErrorResponse) {
+  if (error.error instanceof ErrorEvent) {
+    console.error('An error occurred:', error.error.message);
+  } else {
+    console.error(
+      `Backend returned code ${error.status}, ` +
+      `body was: ${error.error}`);
+  }
+  return throwError(
+    'Something bad happened; please try again later.');
 }
-
-
 
 }
 

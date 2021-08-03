@@ -26,6 +26,7 @@ import { AuthInterceptor } from './auth.interceptor';
 import { AuthService } from './auth.service';
 import { TimetableService } from './timetable/timetable.service';
 import { TicketsService } from './get-ticket/tickets.service';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TicketsService } from './get-ticket/tickets.service';
     AboutComponent,
     GetTicketComponent,
     UserPanelComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

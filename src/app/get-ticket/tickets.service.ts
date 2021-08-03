@@ -24,13 +24,12 @@ export class TicketsService {
     };
 }
 
-  sendUser(user:nonUser){
-    return this.http.post<nonUser[]>('http://localhost:8000/' + 'nonusers/', user, this.httpOptions)
-      .pipe(
-        tap(data =>
-            console.log('All: ' + JSON.stringify(data)
-            ))
-      );
+  sendUser(user:nonUser): Observable<nonUser>{
+    return this.http.post<nonUser>('http://localhost:8000/' + 'nonusers/', user, this.httpOptions);
+  }
+  
+  getTypes(): Observable<Ttypes[]>{
+    return this.http.get<Ttypes[]>('http://localhost:8000/ttype/', this.httpOptions);
   }
 
 }

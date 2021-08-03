@@ -32,7 +32,13 @@ input{
     height:32px;
     color:rgb(108, 199, 34);
 }
-input::placeholder{
+label, input::placeholder{
+    color:rgb(229, 255, 0);
+}
+
+select, option{
+    background-color:rgba(33, 110, 87, 0.8);
+    color:rgb(108, 199, 34);
     color:rgb(229, 255, 0);
 }
 
@@ -59,6 +65,8 @@ input:focus{
     font-size: 16px;
     width:150px;
     height: 43px;
+    margin-top:10px;
+    margin-left:25px;
  }
  .btn:hover{
     box-shadow: 0 0 10px mediumaquamarine;
@@ -75,3 +83,9 @@ input:focus{
      margin-top:10px;
      margin-left:25px;
   }
+
+#alert{
+    color:rgb(255, 195, 65);
+    font-weight: bold;
+    font-size: 16px;
+}

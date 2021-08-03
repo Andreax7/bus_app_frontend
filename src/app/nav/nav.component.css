@@ -201,11 +201,19 @@ input:focus{
 }
 mat-toolbar{
     padding-top:20px;
+    padding-bottom:15px;
     border-radius: 3px;
     background-color:rgba(192, 192, 192, 0.219);
+    height:90px;
 }
 @media(max-width: 959px){
     mat-toolbar{
         border-radius: 0px;
     }
+}
+
+.adminnav, li{
+    display: inline-block;
+    margin:0;
+    padding:0;
 }

@@ -19,6 +19,7 @@ export class NavComponent implements OnInit {
   public unexists!: string;
   error = '';
   token = '';
+  adminnav?: boolean;
 
   constructor( private formBuilder: FormBuilder,
               public authService: AuthService, 
@@ -28,9 +29,24 @@ export class NavComponent implements OnInit {
           username: ['',  [Validators.required]],
           password: ['', [Validators.required]]
           });
+          if(this.isLogin()){
+            this.isadmin();
+            
+           }
   }
 
  ngOnInit() { 
+  
+  }
+
+  isadmin(){
+    this.authService.isadmin().subscribe(
+      response =>{  
+        if(response =='true'){this.adminnav = true; }
+        else{this.adminnav = false;}
+      }
+    );
+    
   }
 
   show(){
@@ -48,6 +64,7 @@ export class NavComponent implements OnInit {
     }
   logout(){
     this.authService.logout();
+    window.location.reload();
   }
 
   UsernameUnique() {

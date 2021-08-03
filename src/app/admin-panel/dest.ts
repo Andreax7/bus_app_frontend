@@ -9,3 +9,17 @@ export class Dest {
         public active: boolean
     ){}
 }
+ 
+export class Timetable {
+    constructor(
+        public working_day: string,
+        public holidays: string,
+    ) {}
+  }
+    export class Time {
+        constructor(
+            public id: number,
+            public deptype: string,
+            public departure: string,
+        ) {}
+        }

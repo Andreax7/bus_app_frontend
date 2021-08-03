@@ -1,4 +1,3 @@
-
 export class Ticket {
     constructor(
     id: number,
@@ -18,9 +17,9 @@ export class Ttypes{
 }
 
 export class nonUser{
-    constructor(
-    id: any,
-    email: string,
-    firstname: string,
-    lastname: string){}
-}
+        id?: number;
+        firstname?: string;
+        lastname?: string;
+        email?: string;
+    }
+

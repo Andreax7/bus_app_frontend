@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TicketsService } from './tickets.service';
 import { Ticket, nonUser } from './tickets';
-import { Observable } from 'rxjs';
 import { NgxMatDatetimeInput } from '@angular-material-components/datetime-picker';
 
 @Component({
@@ -12,33 +11,35 @@ import { NgxMatDatetimeInput } from '@angular-material-components/datetime-picke
 })
 export class GetTicketComponent implements OnInit {
   
-  public TicketForm: FormGroup;
+  public nUserForm: FormGroup;
+  public TicketForm!: FormGroup;
   emailPattern = "^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   submited?: boolean;  
-  public user: any = []
+  user?: nonUser;
+ 
   
   constructor( private formB: FormBuilder,
-                private TicketsService: TicketsService) {
-    this.TicketForm = this.formB.group({
-    firstname: ['', Validators.required],
-    lastname: ['', Validators.required ],                
-    email: ['',  [Validators.required, Validators.pattern(this.emailPattern)] ], 
-  }) 
+               private TicketsService: TicketsService){
+      
+              this.nUserForm = this.formB.group({
+                            firstname: ['', Validators.required],
+                            lastname: ['', Validators.required ],                
+                            email: ['',  [Validators.required, Validators.pattern(this.emailPattern)] ], 
+               }) 
   }
   
-  ngOnInit(): void {
+  ngOnInit(){
     this.next();
    
   }
 
   next() {
-    if(this.TicketForm.valid){
-      this.TicketsService.sendUser(this.TicketForm.value).subscribe(
+    if(this.nUserForm.valid){
+      this.TicketsService.sendUser(this.nUserForm.value).subscribe(
         (response)=>{
           this.user = response;
-          console.log(this.user);
+          console.log(this.user.id);
       });
-      console.log('user added');
     }
   }
 }

@@ -1,23 +1,31 @@
-<form [formGroup]="TicketForm" (submit)='next()'>
-    <div [style.display]="submited  ? 'none' : 'grid'" id="ticket1">
-      
+<div *ngIf="!submited" id="ticket1">
+<form [formGroup]="nUserForm" (submit)='next()'>
+    
       <p class="header"> Ticket form</p>
-      
-      <div class="row">
-          <input type="email" formControlName="email" placeholder="Email" id="email" required class="form-control">
-      </div>
+        <div class="row">
+            <input type="email" formControlName="email" placeholder="Email" id="email" required class="form-control">
+            <div class="col-4" *ngIf="nUserForm.controls['email'].errors?.required && nUserForm.controls['email'].touched" id="alert">
+              Email is required
+            </div>
+            <div  class="col-4" *ngIf="nUserForm.controls['email'].errors?.pattern" id ="alert">
+               Incorrect format
+            </div>
+          </div>
       <div class="row">
         <input type="text" formControlName="firstname" placeholder="First Name" id="firstname" required class="form-control" > 
+        <div class="col-4" *ngIf="nUserForm.controls['firstname'].errors?.required && nUserForm.controls['firstname'].touched" id="alert">
+          This field is required
+        </div>
       </div>
       <div class="row">
         <input type="text" formControlName="lastname"  placeholder="Last Name" id="lastname" required class="form-control">    
+        <div class="col-4" *ngIf="nUserForm.controls['lastname'].errors?.required && nUserForm.controls['lastname'].touched" id="alert">
+          This field is required
+        </div>
       </div>  
-        <button  class="btn"  [disabled]="!TicketForm.valid"> Next </button>
-        
-    </div>
-
-</form>
-<div *ngFor="let u of user">
-        {{u}}
+        <button  class="btn" [disabled]="!nUserForm.valid"> Next </button>
+</form> </div>
+<div *ngIf="user">
+        {{user.id}}
     
       </div>

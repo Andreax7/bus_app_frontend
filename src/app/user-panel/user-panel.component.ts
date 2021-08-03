@@ -33,7 +33,7 @@ export class UserPanelComponent implements OnInit {
   isAdm(){
     this.auth.isadmin().subscribe(
       response =>{  
-        if(response!==false) {this.isadmin = true; }
+        if(response!==false) {this.isadmin = true;}
         else {this.isadmin = false;}
       }
     );

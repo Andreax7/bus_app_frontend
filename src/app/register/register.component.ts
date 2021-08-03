@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from './user';
 import { AuthService } from '../auth.service';
-import { PassMatchValidator } from './passMatch';
+
+import Validation from './passMatch';
 
 
 
@@ -20,7 +21,7 @@ export class RegisterComponent implements OnInit{
   registerForm!: FormGroup;
   emailPattern = "^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   passwordPattern = "^[A-Za-z0-9._*+-]{8,}$";
-  PassMatch = '';
+
 
   constructor(public formBuilder: FormBuilder,
               private AuthService: AuthService) {
@@ -29,9 +30,11 @@ export class RegisterComponent implements OnInit{
                   first_name: ['', Validators.required],
                   last_name: ['', Validators.required ],                
                   email: ['',  [Validators.required, Validators.pattern(this.emailPattern)] ], 
-                  password: ['', [Validators.required,  Validators.pattern(this.passwordPattern)], [PassMatchValidator('password', 'password2')]],
+                  password: ['', [Validators.required,  Validators.pattern(this.passwordPattern)]],
                   password2:['', [ Validators.required]],
                   role:[''],
+              },  { 
+                validators:[ Validation.PassMatchValidator('password', 'password2')]
               })
     
               }
@@ -55,13 +58,15 @@ export class RegisterComponent implements OnInit{
     if(this.registerForm.valid){
       this.AuthService.register(this.registerForm.value).subscribe(
         res => {
-            console.log(res);
+          console.log('user added');
+          this.submitted = true;               
         },
         error =>{
           console.log(error);
+          this.submitted = true;
         }
       );
-      console.log('user added');
+      
     }
   }
 

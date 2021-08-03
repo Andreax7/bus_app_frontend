@@ -1,20 +1,37 @@
 
   <mat-toolbar>
-    <div fxFlex fxLayout fxLayoutAlign="end">
-       
+    <div *ngIf="adminnav" fxFlex fxLayout fxLayoutAlign="end">
+      <ul  fxLayout fxLayoutGap="15px" class="nav adminnav">
+          <li  *ngIf="adminnav" class="navbar-item" routerLink="/home">
+            <img width="100%" height="60px" alt="BusLogo" src="assets/images/logo.PNG"/>
+          </li>
+          <li  *ngIf="adminnav"> <a class="navbar-item" routerLink="/profile">My profile</a> </li>
+          <li  *ngIf="adminnav"> <a class="navbar-item" routerLink="/admin">Timetable</a> </li>
+          <li  *ngIf="adminnav"> <a class="navbar-item"  routerLink="/users">Users</a> </li>
+          <li  *ngIf="adminnav"> <a class="navbar-item" (click) ="logout()">Logout</a> </li>
+      </ul>
+  </div>
+
+    <div *ngIf="!adminnav && isLogin()" fxFlex fxLayout fxLayoutAlign="end">
         <ul fxLayout fxLayoutGap="15px" class="nav">
-            <li *ngIf="!isLogin()" class="navbar-item" routerLink="/home">
+            <li class="navbar-item" routerLink="/home">
               <img width="100%" height="60px" alt="BusLogo" src="assets/images/logo.PNG"/>
             </li>
-              <li *ngIf="isLogin()" class="navbar-item" routerLink="/profile">
-                <img width="100%" height="60px" alt="BusLogo" src="assets/images/logo.PNG"/>
-            </li>
-            <li>    <a class="navbar-item" routerLink="/timetable">Timetable</a> </li>
-            <li>   <a class="navbar-item"  routerLink="/about">About Us</a> </li>
-            <li *ngIf="!isLogin()">   <a class="navbar-item" (click) ="show()" >Login</a> </li>
-            <li *ngIf="isLogin()">   <a class="navbar-item" (click) ="logout()">Logout</a> </li>
+            <li> <a class="navbar-item" routerLink="/profile">My Profile</a> </li>
+            <li> <a class="navbar-item" routerLink="/timetable">Timetable</a> </li>
+            <li> <a class="navbar-item"  routerLink="/about">About Us</a> </li>
+            <li> <a class="navbar-item" (click) ="logout()">Logout</a> </li>
         </ul>
     </div>
+    <div *ngIf="!isLogin()" fxFlex fxLayout fxLayoutAlign="end">
+      <ul fxLayout fxLayoutGap="15px" class="nav">
+          <li *ngIf="!isLogin()" class="navbar-item" routerLink="/home">
+            <img width="100%" height="60px" alt="BusLogo" src="assets/images/logo.PNG"/>
+          <li>    <a class="navbar-item" routerLink="/timetable">Timetable</a> </li>
+          <li>   <a class="navbar-item"  routerLink="/about">About Us</a> </li>
+          <li *ngIf="!isLogin()">   <a class="navbar-item" (click) ="show()" >Login</a> </li>
+      </ul>
+  </div>
 
     <div *ngIf="!isLogin()" [style.display]="showModal ? 'grid' : 'none'" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">

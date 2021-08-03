@@ -6,10 +6,10 @@
     <div class="row">
         <input type="text" placeholder="Username" id="username" required [formControlName]="'username'" class="form-control" (change)="UsernameUnique()" >
        
-       <div class="col-3" *ngIf="(registerForm.controls['username'].errors && registerForm.controls['username'].errors?.required) && (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)" id="alert">
+       <div class="col-4" *ngIf="(registerForm.controls['username'].errors && registerForm.controls['username'].errors?.required) && (registerForm.controls['username'].dirty || registerForm.controls['username'].touched)" id="alert">
           Username is required
         </div>
-        <div class="col-3" *ngIf="registerForm.controls.username" id ="alert">
+        <div class="col-4" *ngIf="registerForm.controls.username" id ="alert">
           {{ unexists }}
         </div> 
     </div>
@@ -49,16 +49,13 @@
     </div>
     <div class="row">
       <input type="password" [formControlName]="'password2'" placeholder="Confirm Password" class="form-control" id="pasword2" required>
-       <div *ngIf="registerForm.controls['password2'].errors?.PassMatchValidator">Password and Confirm Password must be match.</div> 
-       <div class="col-4" id="alert"> 
-       {{ PassMatch }}
-        </div>
+       <div class="col-4" id="alert" *ngIf="registerForm.controls['password2'].errors?.matching">Password not matching.</div> 
+       
       <div class="col-4" *ngIf="registerForm.controls['password2'].touched && registerForm.controls['password2'].errors?.required"  id="alert"> 
         This field is required
        
      </div>
-      <
-    <span> *Password must have minimum 8 characters, <br> capital letters and numbers or characters.</span>
+    <span> *Password must have minimum 8 characters, capital letters and numbers or characters.<br> </span>
   </div> 
     <div class="row">
       <div class="col-3" id ="role">
@@ -76,9 +73,10 @@
       
   </div>
     <div *ngIf="Failed" id ="register">
-      <p> Something went wrong! </p>
+      <p class="header"> Something went wrong! </p>
     </div>
     <div *ngIf="submitted" id ="register">
-      <p> Your account was created. </p>
+      <p class="header"> Your account was created. <br> 
+          Log in to manage your account, tickets and cards </p>
     </div>
   </form>
