@@ -1,20 +1,19 @@
-<div class="content">
 <div class="grid">
-    <h3>Welcome to administration page </h3>
+<div class="content">
+    <h2>Welcome to administration page </h2>
 
 
     <div class="row">
-        <div class="col-4" style="width:40%">
-            <h5> ALL DEPARTURES</h5>
+        <div class="col-4" style="width:36%">
+            <h4> MANAGE DESTINATIONS</h4>
             <table id="desttable">
                 <thead>
                 <tr>
-                    <th>ZONE</th>
-                    <th>LINE NO.</th>
-                    <th>DESTINATION </th>
-                    <th>EDIT </th>
-                    <th> </th>
-                    <th>DELETE TIMETABLE</th>
+                    <th scope="col">ZONE</th>
+                    <th scope="col">LINE NO.</th>
+                    <th scope="col">DESTINATION </th>
+                    <th scope="col">EDIT</th>
+                    <th scope="col">TIMETABLE</th>
                 </tr>
                 
                 </thead>
@@ -27,30 +26,20 @@
                     </td>                    
                     <td (click)="showTable(dest.id)">
                         <mat-icon>calendar_today</mat-icon>
-                    </td>
-                    <td (click)="deleteTimetable(dest.id)">    
-                         <mat-icon> delete </mat-icon>
-                    </td>              
+                    </td>   
                 </tr>
                 </tbody>
             </table>
             <button class="btn-lg btn-outline-primary" (click) = "openAddWindow()">Add new</button>
             </div>
-            <div class="col-4" style="width:26%;">
-                <h5> Timetable </h5>
-                <table id="timetable" [style.display]="showTime ? 'block' : 'none'">
-                        <tr>
-                            <th>WORKING DAYS</th>
-                            <th>HOLIDAYS</th>
-                        </tr>              
-                        <tr *ngFor="let time of times">
-                            <td>{{time.working_day}}</td>   
-                            <td>{{time.holidays}}</td>
-                        </tr>      
-            </table>
-            <button class="btn-lg btn-outline-primary" (click) = "OpenTimetable()">Add new</button> 
+
+        <div class="col-4" style="width:26%;" >
+            <h4>MAKE NEW TIMETABLE</h4>
+
+            <p> To see added departure for destination click on timetable icon in the 'manage destinations' section.<br>
+            If desired departure time doesnt exist, add new departure time in the 'manage departure time' section.</p> 
             
-            <form [style.display]="showTimetable ? 'block' : 'none'" [formGroup]="AddTimeForm" (ngSubmit)="AddTimetable()" id="newTimetable"> 
+            <form [formGroup]="AddTimeForm" id="newTimetable" (ngSubmit)="onSubmit()"> 
                 <label for="departures" id="dep">Choose destination:</label>
                 <select formControlName="dest_name" >
                     <option *ngFor="let d of dest" [value]='d.id'>{{d.dest_name}}</option>       
@@ -59,29 +48,52 @@
                 <select formControlName="departure">  
                         <option *ngFor="let t of times2" [value]='t.id'>{{t.deptype}} {{t.departure}}</option>   
                 </select><br>
-                <button type="submit" class="btn-lg btn-outline-primary">Add </button>
+                <button type="submit" class="btn-lg btn-outline-primary" name="add">Add </button>
+                <button type="submit" class="btn-lg btn-outline-primary"  name="delete">Delete </button> 
             </form>
+
+            <div id='timetableDest' [style.display]="showTimetable ? 'grid' : 'none'">
+              
+                <table >  
+                    <thead>
+                        
+                        <th ></th>
+                       
+                    </thead>
+                  <tbody *ngFor = "let t of times2">
+                    <tr *ngFor="let time of timet">
+                        <td *ngIf ="(t.id == time.departure)&&(t.deptype == 'holidays')"> Holidays --{{ t.departure }}</td>
+                        <td *ngIf ="(t.id == time.departure)&&(t.deptype == 'working_day')"> Working Day --{{ t.departure }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
          </div>
 
+
          <div class="col-4">
-            <h5>Departure Times</h5>
+            <h4>MANAGE DEPARTURE TIME</h4>
             <div class="times">
+                <p>Here you can add departure time to make timetable for chosen destination</p>
+                <form [formGroup]="AddDepartureForm" (ngSubmit)="AddTime()" id="addDept"> 
+                    <label for="departures">Period:</label>
+                    <select formControlName="deptype">
+                        <option value='working_day'>Working day</option>    
+                            <option value='holidays'>Holidays</option>     
+                    </select><br>
+                    <label for="times">Departure time:</label>
+                    <input  formControlName="departure" placeholder="Add departure time...." type="time" id="addtime"/><br>
+                    <button class="btn-lg btn-outline-primary" type="submit"  >Add new</button>
+                </form>
+                <p>If departure time is deleted, all connected data will also be deleted from the destinations timetable!<br>
+                To add departure time to destinations timetable click "make new timetable" </p>
                 <form [formGroup]="delDepForm" (ngSubmit)="deleteTime()"  id="delDept"> 
                     <label  id="dep" for="departures">Choose departure to delete:</label>
                     <select formControlName="id">
                         <option disabled>All Departures</option>    
                             <option *ngFor="let t of times2" [value]='t.id'>{{t.deptype}} {{t.departure}}</option>   
-                    </select>
+                    </select><br>
                     <button type="submit" class="btn-lg btn-outline-primary">Delete</button>
-                </form>
-                <form [formGroup]="AddDepartureForm" (ngSubmit)="AddTime()" id="addDept"> 
-                    <label id="dep" for="departures">Departure Times:</label>
-                    <select formControlName="deptype">
-                        <option value='working_day'>Working day</option>    
-                            <option value='holidays'>Holidays</option>     
-                    </select>
-                    <input  formControlName="departure" placeholder="Add departure time...." type="time" id="addtime"/>
-                    <button class="btn-lg btn-outline-primary" type="submit"  >Add new</button>
                 </form>
             </div>
 

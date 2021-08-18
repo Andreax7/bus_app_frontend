@@ -1,10 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ɵstringify } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import {BehaviorSubject , Observable, throwError} from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from './register/user';
+import jwt_decode from 'jwt-decode';
 
+
+var decoded: any;
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +20,9 @@ export class AuthService {
   };
   private UserSubject: BehaviorSubject<User>;
   public user: Observable<User>;
-
-  public token!: any;
-  public username?:string;
+  private token = '';
+  public username?: string;
   public errors: any = [];
-  public token_expires!: Date;
   private  headers = new HttpHeaders({'Content-Type': 'application/json',
                               'Access-Control-Allow-Origin': '*',
                               'Authorization':'JWT '+ localStorage.getItem("user")});
@@ -32,6 +33,7 @@ export class AuthService {
     
       this.UserSubject = new BehaviorSubject<User>(null!);
       this.user = this.UserSubject.asObservable();
+      this.token = ɵstringify(localStorage.getItem('user'));
 
       this.httpOptions = {
         headers: new HttpHeaders({
@@ -107,32 +109,30 @@ export class AuthService {
     return this.http.post<any>('http://localhost:8000/upload/', formData);
   }
 
-  getJWTPayload(){
-    return this.http.post<User>('http://localhost:8000/refresh/', {headers:this.headers, withCredentials:true} )
+ static tokenExp(): boolean {
+    var token = ɵstringify(localStorage.getItem("user"));
+    decoded = jwt_decode(token); // get the token payload
+    const expiryTime = decoded.exp; // get token expiration time
+    return ((1000 * expiryTime) - (new Date()).getTime()) > 3000000; //triggers the refreshToken function in auth-guard service
+  }
+
+  refreshToken(){
+    this.token = ɵstringify(localStorage.getItem("user"));
+    decoded = jwt_decode(this.token);
+  //  console.log(decoded);
+    var orig = decoded.orig_iat;
+    return this.http.post<User>('http://localhost:8000/refresh/',{token:this.token,orig_iat:orig},{headers:this.headers, withCredentials:true} )
     .pipe(
       map(res => {
         if (res){
           this.UserSubject.next(res);
+          localStorage.clear();
           localStorage.setItem("user",res["token"]);
-          console.log(res["token"]);
-
+          console.log(res["token"], ' refreshed token');
         }
       }),
     );
   }
-
-// Handle errors
-handleError(error: HttpErrorResponse) {
-  if (error.error instanceof ErrorEvent) {
-    console.error('An error occurred:', error.error.message);
-  } else {
-    console.error(
-      `Backend returned code ${error.status}, ` +
-      `body was: ${error.error}`);
-  }
-  return throwError(
-    'Something bad happened; please try again later.');
-}
 
 }
 

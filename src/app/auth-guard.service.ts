@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -16,10 +15,18 @@ export class AuthGuardService  implements CanActivate  {
       alert('You are not logged in');    
       return false;
     }
+    if(!AuthService.tokenExp()) { //returns false if token IS expired
+        this.AuthService.refreshToken().subscribe();
+        return true;
+    } 
+  
     else{
       return true;
     }
+      
   }
+
+
         
   
 }

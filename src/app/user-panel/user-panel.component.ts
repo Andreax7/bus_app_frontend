@@ -63,16 +63,11 @@ export class UserPanelComponent implements OnInit {
     );
   }
 
-  showinfo(): void {
-    if (this.myinfo) this.myinfo = false;
-    else this.myinfo = true;
-  }
 
  getmyData(){
    this.auth.myprofiledata().subscribe(
      response =>{
        this.user=response;
-       console.log(this.user);
   
      }
    )

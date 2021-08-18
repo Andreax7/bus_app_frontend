@@ -1,5 +1,20 @@
+<div id="infotable">
+  <h3>Ticket info</h3>
+  <table>
+    <thead>
+      <th>Ticket type</th>
+      <th>Zone</th>
+      <th>Price /ticket</th>
+    </thead>
+    <tr *ngFor='let type of ticket_types'>
+    <td>{{type.tickettype}}  </td>
+    <td> {{type.zone}}</td>
+    <td>{{type.ticket_price}} hrk</td></tr>
+  </table>    
+</div>
+
 <div *ngIf="!submited" id="ticket1">
-<form [formGroup]="nUserForm" (submit)='next()'>
+  <form [formGroup]="nUserForm" (submit)='next()'>
     
       <p class="header"> Ticket form</p>
         <div class="row">
@@ -24,8 +39,48 @@
         </div>
       </div>  
         <button  class="btn" [disabled]="!nUserForm.valid"> Next </button>
-</form> </div>
-<div *ngIf="user">
-        {{user.id}}
-    
-      </div>
+  </form>
+</div>
+
+<div id="ticket2" *ngIf="user"> <!---*ngIf="submited" --->  
+   <form [formGroup]="TicketForm" (submit)='submitTicket()'>
+     <p class="header"> Ticket form</p>
+        <div class="row">
+          <label for="ticket_types" id="ticket_types">Choose ticket type:</label>
+          <select formControlName="ticket_types_id" >  
+                  <option  *ngFor='let type of ticket_types' [value]='type.id'>
+                            {{type.tickettype}} Zone: {{type.zone}}
+                  </option>   
+          </select><br>
+        </div>
+      <div class="row">
+        <input type="datetime-local" formControlName="validfrom" id="validfrom" class="form-control">
+        <input type="number" min="1" formControlName="amount" id="amount" class="form-control">
+      </div> 
+        <button  class="btn" [disabled]="!TicketForm.valid"> Submit </button>
+        <div class="row">
+          <input *ngIf="user" type="hidden" formControlName="non_users_id" [value]="user.id" id="non_users_id" name="non_users_id" class="form-control">
+        </div>
+  </form>
+  
+</div>
+
+  <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">
+    <br/><br/>
+    <div *ngIf="ticketsubm" class="container" id="content" #content>
+        <table class="table" style="background-color:lightgrey; color:#034f52" >
+          <thead>User No.  {{ticket?.non_users_id}} </thead>
+            <tr>
+              <th>Ticket type</th> <th>{{ticket.ticket_types_id}}</th>
+            </tr>
+            <tr>
+                <th>Date of purchase</th><th>{{ticket.ticket_date}}</th>
+                <th>Valid from</th><th>{{ticket.validfrom}}</th>
+            </tr>  
+            <tr>
+                <th>Amount</th><th>{{ticket.amount}}</th></tr>
+            <tr> 
+                <th *ngFor="let ty of ticket_types"><p *ngIf="ticket.ticket_types_id==ty.id">Total: {{ty.ticket_price * ticket.amount}} hrk</p></th>   
+            </tr>
+        </table>
+    </div>

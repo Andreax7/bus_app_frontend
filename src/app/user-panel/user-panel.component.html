@@ -1,27 +1,27 @@
 <div class="grid">
 <div class="content" *ngFor="let u of user">
     <h3 id="header"> Welcome {{u.first_name}}</h3>
-        <div *ngIf="isadmin" class="row"> <h5> You have admin permissions, click the button to visit admin page </h5> 
-                        <button class="btn" routerLink="/admin"> Admin page </button> 
+        <div *ngIf="isadmin" class="row"> 
+                    <h5> You have admin permissions, click the button to visit admin page  
+                    <button class="btn" routerLink="/admin"> Admin page </button> </h5>
         </div>
     <div class="row">
     <div class="col-6">
         <h4> My Info </h4> 
             <div class="photo" *ngIf="response && imageURL">
-            My photo: {{ u.picture }}<button class="btn"> Edit </button>
-            
-                <img [src]='imageURL' />
-                
-              
-                <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              
-                  <input type="file" name="profile" (change)="onChange($event)" />
-                  <button type="submit">Upload </button>
-              
-                </form>
+                    My photo: {{ u.picture }}<button class="btn"> Edit </button>
+                    
+                        <img [src]='imageURL' />
+                        
+                    
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    
+                        <input type="file" name="profile" (change)="onChange($event)" />
+                        <button type="submit">Upload </button>
+                    
+                        </form>
              </div>
-        <button class="btn" (click) ="showinfo()" > Show details </button> 
-        <ul [style.display]="myinfo ? 'block' : 'none'" >
+        <ul>
                 <li> UID: {{ u.id}}</li>
                 <li>First name: {{ u.username}}</li>
                 <li>email: {{ u.email}}</li>

@@ -23,6 +23,7 @@ export class TimetableService {
     return this.http.get<Dests[]>(`${this.destsUrl}${id}`);
 }
   getDetails(id: any): Observable<Time[]> {
-    return this.http.get<Time[]>(`http://localhost:8000/timetable/${id}`).pipe(map(res => res));
+    return this.http.get<Time[]>(`http://localhost:8000/timetable/${id}`).pipe(
+      map(res => res));
 }
 }

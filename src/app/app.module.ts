@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {  NgxMatDatetimePickerModule, NgxMatNativeDateModule }from '@angular-material-components/datetime-picker';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -27,6 +26,11 @@ import { AuthService } from './auth.service';
 import { TimetableService } from './timetable/timetable.service';
 import { TicketsService } from './get-ticket/tickets.service';
 import { UsersComponent } from './users/users.component';
+
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+} from '@angular-material-components/datetime-picker';
 
 @NgModule({
   declarations: [

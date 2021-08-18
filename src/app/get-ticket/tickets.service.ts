@@ -32,4 +32,8 @@ export class TicketsService {
     return this.http.get<Ttypes[]>('http://localhost:8000/ttype/', this.httpOptions);
   }
 
+  buyTicket(ticket: Ticket): Observable<Ticket>{
+    return this.http.post<Ticket>('http://localhost:8000/buy_ticket/', ticket, this.httpOptions);
+  }
+
 }

@@ -12,8 +12,9 @@ export class Dest {
  
 export class Timetable {
     constructor(
-        public working_day: string,
-        public holidays: string,
+        public id: number,
+        public departure: number,
+        public dest_name: number
     ) {}
   }
     export class Time {

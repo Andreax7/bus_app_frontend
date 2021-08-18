@@ -7,15 +7,22 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq = request;
-    //console.log(authReq);
     const user = localStorage.getItem('user')!;
-    if (user && user) {
+    if (user) {
       request = request.clone({
         setHeaders: {
           Authorization: `JWT ${user}`
         }
       });
     }
+    if (!user) {
+      request = request.clone({
+        setHeaders: {
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+}      });
+    }
+
     return next.handle(request);
   }
 }

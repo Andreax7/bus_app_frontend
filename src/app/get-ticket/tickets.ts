@@ -1,19 +1,18 @@
 export class Ticket {
-    constructor(
-    id: number,
-    ticket_date: Date,
-    validfrom: Date,
-    amount: number,
-    non_user_id: number,
-    Profiles_id: number) {}
+    id!: number;
+    ticket_date!: Date;
+    validfrom!: Date;
+    amount!: number;
+    non_users_id!: number;
+    Profiles_id?: number;
+    ticket_types_id!: number
 }
 
 export class Ttypes{
-    constructor(
-    id: number,
-    tickettype: string,
-    ticket_price: number,
-    zone_id: number){}
+    id?: number;
+    tickettype?: string;
+    ticket_price!: number;
+    zone?: number
 }
 
 export class nonUser{
