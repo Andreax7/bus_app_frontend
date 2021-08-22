@@ -12,7 +12,8 @@ export class Ttypes{
     id?: number;
     tickettype?: string;
     ticket_price!: number;
-    zone?: number
+    zone?: number;
+    active!: boolean;
 }
 
 export class nonUser{

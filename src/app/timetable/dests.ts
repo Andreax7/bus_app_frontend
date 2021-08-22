@@ -10,9 +10,8 @@ export class Dests {
 }
 
 export class Time {
-    constructor(
-        public working_day: string,
-        public holidays: string,
-    ) {}
+        public working_day!: string;
+        public holidays!: string;
+   
    
 }

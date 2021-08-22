@@ -7,25 +7,26 @@
     height: max-content;
   }
 
-
 .container{
     display: grid;
     position: relative;
-    height:900px;
     margin-top:100px;
     text-align:center;
     font-size: 20px;
     overflow: visible;
     width:100%;
-    }
+    height:900px;
+}
 
 #header{
-    left:-5%;
-    top:16%;
+    left:-20%;
+    top:20%;
+    color:rgb(58, 155, 147);
 }
 #header2{
-    left: 75%;
-    top: 37%;
+    left: 105%;
+    top: 20%;
+    color:rgb(58, 155, 147);
 }
 
 .intro3{
@@ -50,28 +51,60 @@ table, thead, th, tr{
     padding:5px;
 }
 th{
-    border-bottom:solid 0.5px  rgb(22, 75, 48);
+    border-bottom:solid 0.5px  rgb(28, 94, 133);
+    color: rgb(28, 94, 133);
     font-family: 'Abril Fatface', cursive;
     letter-spacing: 2px;
 }
-span{
+span, p{
     padding:10px;
+    color: rgb(58, 155, 147);
 }
 
 #timetable{
     position:absolute;
-    right:0%; 
-    top:47%; 
-    align-items: stretch; 
-    
+    left: 70%; 
+    top: 40%;
+    display: block;
+    height:400px;
+    width: 100%;
+    align-items: baseline;
+    border-collapse: collapse;
+    overflow-y: scroll;
+    align-items: stretch;
 }
+#timetable, td{
+    margin-left:20px;
+    padding-left: 50px;
+    padding-right: 20px;
+}
+
 #desttable{
-    position:absolute;
-    left: -2%;
+    position: absolute;
+    left: -5%;
+    top: 40%;
     align-items: stretch; 
-    top: 48%;     
-  
+    border-collapse: collapse;
+    display: block;
+    width: 70%;
+    height: 50%;
+    overflow-y: scroll;
 }
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    }
+    ::-webkit-scrollbar-track {
+    border: 1px solid rgba(18, 75, 77, 0.1);
+    border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+    background: rgba(18, 75, 77, 0);
+    border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+    background: rgba(18, 75, 77, 0.6);
+    }
 mat-icon:hover {
     box-shadow: 0 0 10px rgba(31, 53, 46, 0.603);
     cursor:pointer;
@@ -79,9 +112,13 @@ mat-icon:hover {
 
 .intro {
     align-items: center;
-    background-image: url("../../assets/images/buspic2.png");
-    background-repeat: repeat-x;
-    height:400px;
+    background-image: url('../../assets/images/busTimetable.jpg');
+    background-size: cover;
+    opacity: 0.5;
+    background-repeat: no-repeat; 
+    filter: blur(6px);
+    -webkit-filter: blur(6px);
+    height:60%;
     width:100%;
     top:0;
     position:absolute;
@@ -92,31 +129,24 @@ mat-icon:hover {
 
 .intro2{
     height: 40%;
-    background-image: url("../../assets/images/cloud.png");
     width: 60%;
     position: absolute;
-    top: 30%;
-    
-    animation: cloudmoves 3s infinite linear;
-    }
+    top: 0%;
 
-    @keyframes cloudmoves {
-      from{right:35%;}
-      to{right:50%;}
     }
  #intro{
     font-size: 20px;
     word-spacing: 5px;
     line-height: 2.5;
     position: absolute;
-    top: 58%;  
+    top: 70%;  
     font-family: 'Reggae One', cursive;
-    left: 20%;
+    left: 50%;
     flex:2;
   }
  h3{
   text-transform: uppercase;
-  color: rgb(9, 97, 82);
+  color: rgb(67, 160, 221);
   font-size: 30px;
   text-shadow: 2px 2px 5px rgb(21 110 95 / 90%);
   letter-spacing: 3px;
@@ -128,4 +158,11 @@ mat-icon:hover {
   font-weight: 500;
   font-family: 'Reggae One', cursive;
  }
+
+ #mainHeader{
+    font-size: 44px;
+    text-shadow: 4px 4px 10px rgb(24, 40, 112);
+    left: 50%;
+    width:100%;
+}
 

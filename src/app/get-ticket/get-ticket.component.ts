@@ -23,6 +23,8 @@ export class GetTicketComponent implements OnInit {
   user!: nonUser;
   ticket_types!: Ttypes[];
   ticket!: Ticket;
+  showinfo=false;
+  types?: Ttypes[];
 
  
   
@@ -49,9 +51,19 @@ export class GetTicketComponent implements OnInit {
   getTypes(){
     this.TicketsService.getTypes().subscribe(
       next =>{
-       this.ticket_types = next;
+       for(let t of next)
+       {
+         if(t.active)
+          this.ticket_types=next;
+          this.types = next;   
+      }
       }
     )
+  }
+
+  info(){
+    if(!this.showinfo) return this.showinfo=true;
+    else return this.showinfo=false;
   }
 
   next() {
@@ -77,20 +89,18 @@ export class GetTicketComponent implements OnInit {
         }
       )}
   }
-  
+
   SavePDF(){
      let data = document.getElementById('content'); 
-     console.log(data); 
      if(data){
       html2canvas(data).then(canvas => {
-          let docWidth = 208;
+          let docWidth = 200;
           let docHeight = canvas.height * docWidth / canvas.width;
-          const contentDataURL = canvas.toDataURL('image/png')
-          let doc = new jsPDF('p', 'mm', 'a4');
+          let pdfFile = new jsPDF('p', 'mm', 'a4');
           let position = 0;
-          doc.addImage(contentDataURL, 'PNG', 0, position, docWidth, docHeight)
-          
-          doc.save('exportedPdf.pdf');
+          const tableData = canvas.toDataURL('image/png');
+          pdfFile.addImage(tableData, 'PNG', 0, position, docWidth, docHeight);          
+          pdfFile.save('ticket.pdf');
       }); 
     }
   }

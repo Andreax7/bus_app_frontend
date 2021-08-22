@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Dest, Time, Timetable } from '../admin-panel/dest';
-import { Router } from '@angular/router';
+import { Ttypes } from '../get-ticket/tickets';
 
 
 @Injectable({
@@ -47,8 +47,20 @@ export class AdminService {
     return this.http.get<Timetable[]>('http://localhost:8000/showtimetable/'+ id);
   }
 
-  deleteTimetable(FormData: any): Observable<any>{
-    return this.http.delete<any>('http://localhost:8000/newtimetable/', FormData);
+  deleteTimetable(dnid: number, did:number){
+    return this.http.delete('http://localhost:8000/deltimetable/' + dnid + '/'+ did);
+  }
+
+  getTypes():Observable<Ttypes[]>{
+    return this.http.get<Ttypes[]>('http://localhost:8000/ttype/')
+
+  }
+  addTicketType(formData: any): Observable<Ttypes[]>{
+    return this.http.post<Ttypes[]>('http://localhost:8000/ttype/',formData)
+  }
+
+  deactivate(id:any, formData: any): Observable<Ttypes[]>{
+    return this.http.put<Ttypes[]>('http://localhost:8000/ticketactive/'+ id, formData);
   }
 
 }

@@ -1,29 +1,31 @@
 <div class="intro">
-    <h3> CATCH A BUS RIDE AROUND SPLIT</h3>
-    <div class="intro2">
-    </div>
-    <p id="intro">Check timetables for bus lines around Split area,<br>
-      get tickets or subscriptions and enjoy Your ride.
-   </p>
+    
+    
+</div>
+
+<div class="intro2">
+    <h3 id="mainHeader"> CATCH A BUS RIDE AROUND SPLIT</h3>
+    <p id="intro">
+              Check the Bus lines or search your line by zone  
+    </p>
 </div>
 
 <div class="container">
     <h3 id="header"> DESTINATIONS </h3>
     <div class="intro3">
-      <span>  >>> Find here timetable of wanted bus line by clicking on the details icon <br><br>
-            Check the Bus lines or search your line by zone                
-        </span>
-        <br>
-        <p>Filter destinations by zone 
-
-        <select class="custom-select"  #mySelect (change)="getByZone(mySelect.value)">
+        <span>
+            >>> Find here timetable of wanted bus line by clicking on the details icon  <br> <br>          
+        </span> 
+       <p>Filter destinations by zone 
+            <select class="custom-select"  #mySelect (change)="getByZone(mySelect.value)">
                 <option [value]=""> </option>
                 <option [value]="1">Suburbs</option>
                 <option [value]="2">City Center</option>
-        </select>   </p>
- 
+            </select>   
+        </p>
     </div>
-        <div class="col-6">
+
+    <div class="col-6">
         
         <table id="desttable">
             <thead>
@@ -42,30 +44,29 @@
                   <td>{{ dests.dfrom }}</td>
                   <td>{{ dests.dto}}</td>
                   <td (click)="getDetail(dests.id)">
-                    <mat-icon>calendar_today</mat-icon>
+                    <mat-icon> departure_board</mat-icon>
                   </td>
                </tr>
             </tbody>
-         </table>
-        </div>
+        </table>
+
+    </div>
         <div class="col-6">
             <h3 id="header2"> Timetable </h3>
-        <table id="timetable" [style.display]="showTimetable ? 'block' : 'none'">
+        <table id="timetable">
             <thead>
                 <tr>
                     <th>WORKING DAYS</th>
                     <th>HOLIDAYS</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let times of times">
-            
-                    <td>{{times.working_day}}</td>
-                    <td>{{times.holidays}}</td>
-        
-                </tr>
-
+            <tbody [style.display]="showTimetable ? 'block' : 'none'">
+               <tr *ngFor="let t of times">
+                    <td>{{t.working_day}}</td>
+                    <td>{{t.holidays}}</td>
+               </tr>
             </tbody>
+    
         </table> 
         </div>
 

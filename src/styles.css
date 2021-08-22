@@ -2,7 +2,7 @@
 html {
     display: block;
 }
-html, body { height:max-content;    background-color:rgba(151, 190, 171, 0.418); overflow: visible;}
+html, body { height:max-content; background-color:  rgba(9, 66, 68, 0.4); overflow: visible;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
     margin: 0;
     font-size: 1rem;

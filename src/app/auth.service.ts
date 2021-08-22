@@ -90,9 +90,6 @@ export class AuthService {
     return this.http.get<User[]>('http://localhost:8000/myprofile/', {headers:this.headers, withCredentials:true} ).pipe(map(res => res))
   }
 
-  admindata(){
-    return this.http.get('http://localhost:8000/moderator/', {headers:this.headers, withCredentials:true})
-  }
 
   isadmin(){
     return this.http.get('http://localhost:8000/isstaff/', {headers:this.headers, withCredentials:true})

@@ -1,15 +1,19 @@
+<div class="row">
 <div id="infotable">
-  <h3>Ticket info</h3>
-  <table>
+  <h3 (click) ="info()">Ticket info - click to see more </h3> 
+  <table id="infotable" [style.display]="showinfo ? 'table' : 'none'">
     <thead>
       <th>Ticket type</th>
       <th>Zone</th>
       <th>Price /ticket</th>
     </thead>
-    <tr *ngFor='let type of ticket_types'>
+    <tbody *ngFor='let type of ticket_types'>
+    <tr *ngIf="type.active==true">
     <td>{{type.tickettype}}  </td>
-    <td> {{type.zone}}</td>
+    <td *ngIf="type.zone==1"> Suburbs</td>
+    <td *ngIf="type.zone==2"> City Center</td>
     <td>{{type.ticket_price}} hrk</td></tr>
+    </tbody>
   </table>    
 </div>
 
@@ -41,16 +45,17 @@
         <button  class="btn" [disabled]="!nUserForm.valid"> Next </button>
   </form>
 </div>
+</div>
 
-<div id="ticket2" *ngIf="user"> <!---*ngIf="submited" --->  
+<div id="ticket2" *ngIf="user" > <!---*ngIf="submited" --->  
    <form [formGroup]="TicketForm" (submit)='submitTicket()'>
      <p class="header"> Ticket form</p>
         <div class="row">
           <label for="ticket_types" id="ticket_types">Choose ticket type:</label>
-          <select formControlName="ticket_types_id" >  
-                  <option  *ngFor='let type of ticket_types' [value]='type.id'>
-                            {{type.tickettype}} Zone: {{type.zone}}
-                  </option>   
+          <select formControlName="ticket_types_id">  
+            <optgroup *ngFor="let type of ticket_types">
+              <option *ngIf="type.active" [value]='type.id'> duration: {{type.tickettype}} / Zone: {{type.zone}}</option>
+            </optgroup>       
           </select><br>
         </div>
       <div class="row">
@@ -65,7 +70,7 @@
   
 </div>
 
-  <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">
+  <button *ngIf="ticketsubm" type="button" value="Download PDF" class="btn" (click)="SavePDF()">Download PDF</button>
     <br/><br/>
     <div *ngIf="ticketsubm" class="container" id="content" #content>
         <table class="table" style="background-color:lightgrey; color:#034f52" >

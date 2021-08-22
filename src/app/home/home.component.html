@@ -2,20 +2,20 @@
      <h3> CATCH A BUS RIDE AROUND SPLIT</h3>
      <div class="intro2">
      </div>
-     <p id="intro">Check timetables for bus lines around Split area,<br>
-       get tickets or subscriptions and enjoy Your ride.
-    </p>
+ <p id="intro">Check timetables for bus lines around Split area,<br>
+      get tickets or subscriptions and enjoy Your ride.
+   </p>
  
    </div>
  
 <div class="content">
-        
-<div class="row">
-   <div class="col-6">
+  
+<div class="row" style="padding-top:50px;">
+   <div class="col-6"  style="padding-top:10px;">
       <div class="ticket-info">
          <h3 id="tic">TICKETS</h3>
          
-           <h4>  Get your tickets fast and easy</h4>   
+           <h4>  Get your tickets fast and easy <mat-icon>ballot</mat-icon></h4>   
             <h5 (click) ="show1()">click to read more >>></h5>    
            <div class="ticketintro" [style.display]="showticketinfo ? 'grid' : 'none'"> 
               <p> Choose when you want to use the ticket<br>
@@ -35,12 +35,12 @@
          <app-get-ticket> </app-get-ticket>
          </div>
     </div>
-   <div class="col-6">
+   <div class="col-6" style="padding-left:20px; padding-top:15px;">
       
       <div class="register-info">
          <h3 id="sub">SUBSCRIPTIONS</h3>
             <h4>   Sign Up for subscription 
-               <span  class="material-icons" id="subscard"> credit_card</span>
+               <span  class="material-icons" id="subscard"> <mat-icon>assignment_ind</mat-icon></span>
             </h4>
             <h5 (click) ="show2()">click to read more >>></h5>   
       <div class="reginfo2" [style.display]="showsubinfo ? 'grid' : 'none'">
@@ -62,5 +62,6 @@
    </div>
         
 </div>
+
 
 </div>

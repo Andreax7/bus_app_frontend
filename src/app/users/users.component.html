@@ -1,1 +1,297 @@
-<p>users works!</p>
+<div class="grid">
+    <div class="row" id="ticketManag">
+        <h2>Users and tickets management</h2>
+
+            <div class="col-4" id="nuserCol"> <!-- USERS WITHOUT PROFILE LIST -->
+                <table id="nonuserTable"  mdbTable small="true">
+                    <thead> 
+                        <th scope="row" colspan="4">User with tickets</th>
+                        <tr>
+                        <th>id</th>
+                        <th>email</th>
+                        <th>firstname and lastname</th>
+                        <th>see tickets</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  mdbTableCol *ngFor="let user of nonUser">
+                        <td >{{ user.id }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.firstname }} {{ user.lastname }}</td>
+                        <td style="color: rgb(159, 204, 34);" class="edit" (click) = "seeTicket(user.id)"><mat-icon style="width:40px; height:40px;">picture_in_picture</mat-icon>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="col-4" style="width:32%; padding-left:25px;"> <!-- LIST OF EACH USER TICKETS-->
+                <h4>Click on 'see tickets' icon to see users tickets</h4>
+                <div id="ticketCol">      
+                <table id="TicketTable" mdbTable small="true" [style.display]="shownuTickets ? 'grid' : 'none'">
+                    <thead>
+                        <tr>
+                        <th>Ticket date</th>
+                        <th>Ticket type</th>
+                        <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  mdbTableCol *ngFor="let t of nuTicket" id="ticketrow">
+                        <td style="width:70px">{{ t.ticket_date }}</td>
+                        <td>{{ t.ticket_types_id }}</td>
+                        <td>{{ t.amount }}</td>   
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div> 
+
+            <div class="col-4" style="margin-left:50px;"><!-- Users subscriptions-->
+                <h4>Click on 'subscription' icon to see users subscriptions<br>
+                    Click on 'edit' icon if you want to edit users subscription</h4>
+                <div id="SubsCol">      
+                <table id="SubsTable" class="table table-sm" mdbTable small="true" [style.display]="showSubs ? 'grid' : 'none'">
+                    <thead>
+                            <tr>
+                                <th>Subscription No</th>
+                                <th>Date ordered</th>
+                                <th>Profile</th>
+                                <th>Subscription Type</th>
+                                <th>Discount</th>
+                                <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  mdbTableCol *ngFor="let sub of userSubs" id="subrow">
+                                <td style="width:100px;">{{ sub.id }}</td>
+                                <td>{{ sub.date_ordered }}</td>
+                                <td style="width:100px;">{{ sub.Profiles_id }}</td>   
+                                <td style="width:100px;">{{ sub.subscription_types_id }}</td>   
+                                <td >{{ sub.discount }}</td>  
+                                <td style="color: rgb(159, 204, 34);" class="icon" (click)="OpenEditSub(sub.id)">
+                                    <mat-icon> border_color</mat-icon>
+                                </td>   
+                        </tr>
+                    </tbody>
+                    
+                </table>
+                </div>
+
+            </div>
+    </div>
+
+    <div class="row" id="scndRow">
+        <h2>Profiles and subscriptions management</h2>
+        <div class="col-4"> <!-- USERS WITH PROFILE LIST -->
+            <h4>Click on checkbox to set user as employee or to activate/deactive users profile</h4>
+            <div class="ProfileDiv">
+                <table id="ProfilesTable"  mdbTable small="true">
+                    <thead> 
+                        <th scope="row" colspan="4">User with tickets</th>
+                        <tr>
+                            <th>email</th>
+                            <th>firstname and lastname</th>
+                            <th>employee</th>
+                            <th>active</th>
+                            <th>role</th>
+                            <th>see tickets</th>
+                            <th>subs</th>                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  mdbTableCol *ngFor="let profile of Profiles">
+                        <td>{{ profile.email }}</td>
+                        <td>{{ profile.first_name }} {{ profile.last_name }}</td>
+                        <td *ngIf="profile.is_staff">
+                            <input style="width:30px; height:30px;" type="checkbox" checked value="true" (change)="onChange(profile.id, true)" >    
+                        </td>
+                        <td *ngIf="!profile.is_staff">
+                                <input style="width:30px; height:30px;" type="checkbox" value="false" (change)="onChange(profile.id, false)">    
+                        </td>
+                        <td *ngIf="profile.is_active">
+                            <input style="width:30px; height:30px;" type="checkbox" checked value="true" (change)="UserActivity(profile.id, true)" >    
+                        </td>
+                        <td *ngIf="!profile.is_active">
+                                <input style="width:30px; height:30px;" type="checkbox" value="false" (change)="UserActivity(profile.id, false)">    
+                        </td>
+                        <td>{{ profile.role }}</td>
+                        <td style="color:rgb(159, 204, 34);" class="edit" (click) = "seeTicket(profile.id)" ><mat-icon>picture_in_picture</mat-icon>
+                        </td>
+                        <td style="color:rgb(159, 204, 34);" class="edit" (click) = "getUserSubs(profile.id)" ><mat-icon>assignment_ind</mat-icon> 
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-4"> <!-- MANAGE SUBSCRIPTIONS activate/deactivate subscription or add new -->
+           <h2 style="position:relative; top:-8%;">Manage subscription types</h2> 
+           <h4 style="padding-left:30px; position:relative; top:-8%;">Here you can add new ticket type and deactivate ones you dont want to use.</h4>
+           <div>
+            <div id="typetable">
+                <table class="infotable">
+                    <thead>
+                        <th scope="col">Sub. type</th>
+                        <th scope="col">Zone</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Active</th>
+                    </thead>
+                    <tbody *ngFor = "let st of SubTypes">
+                        <tr style="border-bottom: 1px solid rgba(1, 250, 84, 0.3);">
+                            <td> {{ st.subtype }} </td>
+                            <td *ngIf="st.zone==1"> Suburbs</td>
+                            <td *ngIf="st.zone==2"> City Center</td>
+                            <td> {{ st.subprice }} hrk</td>
+                            <td> {{ st.year }}</td>
+                            <td *ngIf="st.active">
+                                <input style="width:32px; height:32px;" type="checkbox" checked value="true" (change)="changeSubType(st.id, true)">  
+                            </td>   
+                            <td *ngIf="!st.active">
+                                <input style="width:32px; height:32px;" type="checkbox" value="false" (change)="changeSubType(st.id, false)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>  
+                        
+                </div>
+          <button type="submit" (click) = "showtypeModal()" id="AddSub" class="btn-lg">Add new</button>
+            </div>
+
+        </div>
+        <div class="col-4"><!-- STATISTICS-->
+            <h2 style="position:relative; top:-15%;">Statistics</h2> 
+            <h4 style="position:relative; top:-13%; right:-15%"> <mat-icon>info</mat-icon>  Amount of sold tickets</h4>
+            <div class="amountTable">
+                <table id="TypeTable"  mdbTable small="true">
+                    <thead>
+                        <th>Ticket type</th>
+                        <th>Zone</th>
+                        <th>Price /ticket</th>
+                        <th> Amount </th>
+                        <th> Total </th>
+                      </thead>
+                      <tbody *ngFor='let type of ticket_types'>
+                        <tr style="border-bottom: 1px solid rgba(1, 250, 84, 0.3);">
+                            <td>{{ type.id }} {{ type.tickettype }}</td>
+                            <td> {{ type.zone }}</td>
+                            <td>{{ type.ticket_price }} hrk</td>
+                            <td *ngIf='type.id'> {{ total[type.id -1] }} </td>
+                            <td *ngIf='type.id'> {{ type.ticket_price * total[type.id -1] }} hrk</td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+            <h4 style="position:relative; top:-18%; right:-15%;"> <mat-icon>info</mat-icon>  Amount of Subscription per Type</h4>
+            <div class="amountSubTable">
+                <table id="SubTypeTable"  mdbTable small="true">
+                    <thead>
+                        <th> Subscription type</th>
+                        <th> Price/ sub.</th>
+                        <th> Year </th>
+                        <th> Amount </th>
+                        <th> Total </th>
+                      </thead>
+                      <tbody *ngFor='let sbt of SubTypes'>
+                        <tr style="border-bottom: 1px solid rgba(1, 250, 84, 0.3);">
+                            <td>{{sbt.subtype}}</td>
+                            <td> {{ sbt.zone }}</td>
+                            <td>{{ sbt.subprice }} hrk</td>
+                            <td *ngIf='sbt.id'>{{ total2[sbt.id -1] }}</td>
+                            <td *ngIf='sbt.id'>  {{ sbt.subprice * total2[sbt.id -1] }} hrk</td>
+                        </tr>
+                      </tbody>
+                </table>
+            </div>
+
+
+
+        </div>
+        
+        
+            
+    </div>
+    <!-- MODAL FOR USER SUBSCRIPTION EDITING -->
+    <div [style.display]="showModal ? 'grid' : 'none'" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h2 class="modal-title" style="margin-left:20px;" id="myModalLabel">Edit Subscription
+            <button type="button" class="btn-dark" class="updatex" style="margin-left:55px;" data-dismiss="modal" (click) = "hide()">x</button>
+            </h2>
+            </div>
+            <form [formGroup]="EditUserSubForm" id="EditUser" (ngSubmit)="EditUserSub(userSub.id)" *ngFor="let userSub of userSub"> 
+                <div class="row">
+                    <label class="col-6">Subscription No.: {{userSub.id}}   </label><label class="col-6"> Profile No.: {{userSub.Profiles_id}} </label>
+                    <input *ngIf="showModal" [(value)]="userSub.Profiles_id" [(ngModel)]="userSub.Profiles_id" type="hidden" formControlName="Profiles_id" class="form-control col-4">      
+                    <input *ngIf="showModal" [(value)]="userSub.id" [(ngModel)]="userSub.id" type="hidden" formControlName="id" class="form-control col-4">   
+                </div><br><br>
+                <div class="row">
+                            <label class="col-12">Order date:</label>
+                        <input *ngIf="showModal"  [(value)]="userSub.date_ordered" [(ngModel)]="userSub.date_ordered" type="text" formControlName="date_ordered" class="form-control col-4" readonly>
+                </div> 
+                <div class="row">
+                    <label class="col-12">Users discount:</label>
+                <input *ngIf="showModal" [(value)]="userSub.discount" [(ngModel)]="userSub.discount" type="text" formControlName="discount" class="form-control col-4">
+                </div>    
+                <div class="row">
+                    <label class="col-12">Subscription Type:</label>
+                <input *ngIf="showModal" (value)="userSub.subscription_types_id" [(ngModel)]="userSub.subscription_types_id"  type="text" formControlName="subscription_types_id" class="form-control col-4">
+                </div> 
+               
+                    <button [disabled]="!EditUserSubForm.valid" type="submit" class="update" class="btn">Update</button>
+            </form>
+        
+        </div>
+    </div> 
+    </div>
+
+
+    <!-- MODAL FOR SUBSCRIPTION TYPE ADD-->
+    <div [style.display]="subModal ? 'grid' : 'none'" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h2 class="modal-title" id="myModalLabel">Add Subscription Type
+            <button type="button" class="btn-dark" class="updatex" data-dismiss="modal" (click) = "hide()">x</button>
+            </h2>
+            </div>
+            <form [formGroup]="NewTypeForm" id="NewTypeForm" (ngSubmit)="NewSubscriptionType()"> 
+                <div class="row">   
+                   <label for="type" class="sub">Subscription type:</label>
+                       <select class="sub" formControlName="subtype" class="form-control">
+                           <option>year</option> 
+                           <option>month</option>   
+                           <option>6 months</option>      
+                       </select><br>
+               </div>
+               <div class="row">
+                   <label for="price" class="sub">Subscription price:</label>
+                   <input id="sub" formControlName="subprice" type="text"/>
+               </div>
+               
+                <div class="row">
+                    <label for="type" class="sub">Year:</label>
+                    <input id="sub" formControlName="year" type="text"/>
+                    </div>
+                <div class="row">
+                    <label for="type" class="sub">Zone:</label>
+                    <select class="sub" formControlName="zone" class="form-control">
+                        <option>1</option> <option>2</option>        
+                    </select><br>
+                </div>
+                <div class="row">
+                    <label for="type" class="sub">Active:</label>
+                    <input type="checkbox"id="adds" formControlName="active"/> 
+                </div>
+               <button type="submit" class="btn"> Add</button> 
+           </form>
+        
+        </div>
+    </div> 
+    </div>
+
+
+</div>

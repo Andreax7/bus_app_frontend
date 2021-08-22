@@ -16,11 +16,13 @@ export class User {
 export class Employees{
     id?:number;
     username?: string;
-    password?: string;
-    is_active?: string;
-    is_staff?: string;
     first_name?: string;
     last_name?: string;
+    email?: string;
+    password?: string;
+    is_active?: boolean;
+    is_staff?: boolean;
+    role?: string;
     address?: string;
     token!: string;
 }

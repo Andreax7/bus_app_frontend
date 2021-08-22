@@ -1,10 +1,9 @@
 <div class="grid">
 <div class="content">
-    <h2>Welcome to administration page </h2>
-
+    <h2 id="mainHeader">Welcome to administration page </h2>
 
     <div class="row">
-        <div class="col-4" style="width:36%">
+        <div class="col-4" style="width:31%">
             <h4> MANAGE DESTINATIONS</h4>
             <table id="desttable">
                 <thead>
@@ -22,56 +21,91 @@
                     <td>{{ dest.zone }}</td>
                     <td>{{ dest.line_no }}</td>
                     <td>{{ dest.dest_name }}</td>
-                    <td (click) = "show(dest.id)"><mat-icon>edit</mat-icon>
+                    <td style="color: rgb(233, 203, 32);" class="edit" (click) = "editDest(dest.id)"><mat-icon>edit</mat-icon>
                     </td>                    
-                    <td (click)="showTable(dest.id)">
+                    <td style="color: rgb(233, 203, 32);" class="icon" (click)="showTable(dest.id)">
                         <mat-icon>calendar_today</mat-icon>
                     </td>   
                 </tr>
                 </tbody>
-            </table>
-            <button class="btn-lg btn-outline-primary" (click) = "openAddWindow()">Add new</button>
-            </div>
+            </table><br>
+            <button class="btn-lg new" (click) = "openAddWindow()"> <mat-icon>library_add</mat-icon> Add new </button>
 
-        <div class="col-4" style="width:26%;" >
-            <h4>MAKE NEW TIMETABLE</h4>
-
-            <p> To see added departure for destination click on timetable icon in the 'manage destinations' section.<br>
-            If desired departure time doesnt exist, add new departure time in the 'manage departure time' section.</p> 
-            
-            <form [formGroup]="AddTimeForm" id="newTimetable" (ngSubmit)="onSubmit()"> 
-                <label for="departures" id="dep">Choose destination:</label>
-                <select formControlName="dest_name" >
-                    <option *ngFor="let d of dest" [value]='d.id'>{{d.dest_name}}</option>       
-                </select><br>
-                <label for="departures" id="dep">Choose Departure:</label>
-                <select formControlName="departure">  
-                        <option *ngFor="let t of times2" [value]='t.id'>{{t.deptype}} {{t.departure}}</option>   
-                </select><br>
-                <button type="submit" class="btn-lg btn-outline-primary" name="add">Add </button>
-                <button type="submit" class="btn-lg btn-outline-primary"  name="delete">Delete </button> 
-            </form>
-
-            <div id='timetableDest' [style.display]="showTimetable ? 'grid' : 'none'">
-              
-                <table >  
-                    <thead>
-                        
-                        <th ></th>
-                       
-                    </thead>
+         <!-- TIMETABLE FOR CLICKED DESTINATION -->   
+         <h4>TIMETABLE VIEW </h4>
+         <p> Click on the timetable icon to see timetable of destination</p>
+            <div class="timetableDest" [style.display]="showTimetable ? 'grid' : 'none'">
+     
+                <table id='timetableDest'>
                   <tbody *ngFor = "let t of times2">
-                    <tr *ngFor="let time of timet">
-                        <td *ngIf ="(t.id == time.departure)&&(t.deptype == 'holidays')"> Holidays --{{ t.departure }}</td>
-                        <td *ngIf ="(t.id == time.departure)&&(t.deptype == 'working_day')"> Working Day --{{ t.departure }}</td>
+                    <tr *ngFor="let time of timet">  
+                        <td class="tablerow" *ngIf ="(t.id == time.departure)&&(t.deptype == 'working_day')"> Working Day {{ t.departure }}</td>
+                        <td class="tablerow" *ngIf ="(t.id == time.departure)&&(t.deptype == 'holidays')"> Holiday {{ t.departure }}</td>
                     </tr>
                   </tbody>
                 </table>
+               
             </div>
+        </div>
+
+        <div class="col-4" style="width:30%;" >
+            <h4 class="timetable">MAKE NEW TIMETABLE</h4>
+
+            <p class="timetable"> To see added departure for destination click on timetable icon in the 'manage destinations' section.<br>
+            If desired departure time doesnt exist, add new departure time in the 'manage departure time' section.</p> 
+            
+            <form [formGroup]="AddTimeForm" class="newTimetable" (ngSubmit)="NewTimetable()"> 
+                <div class="row">
+                    <label for="departures" class="dep">Choose destination:</label>
+                    <select formControlName="dest_name" id="selectDest" class="form-control" name="dest_name">
+                        <option *ngFor="let d of dest" [value]='d.id'>{{d.dest_name}}</option>       
+                    </select><br>
+                </div>
+                <div class="row">
+                    <label for="departures" class="dep">Choose Departure:</label>
+                    <select formControlName="departure"  id="selectDep" class="form-control" name="departure">  
+                            <option *ngFor="let t of times2" [value]='t.id'>{{t.deptype}} {{t.departure}}</option>   
+                    </select><br>
+                </div>  
+                    <div class="row">
+                        <div class="col-6" style="width:30%;">
+                            <button type="submit" class="btn-lg add" name="add">Add <mat-icon>today</mat-icon> </button>    
+                        </div>
+                        <div class="col-6" style="width:70%;" id="alert">
+                            {{ err }}
+                        </div>
+                     </div>
+            </form>
+
+            <h4 class="timetable">DELETE TIMETABLE</h4>
+            <form [formGroup]="DelTimeForm" class="newTimetable" (ngSubmit)="delTimetable()"> 
+                <div class="row">
+                    <label for="destination">Choose destination:</label>
+                    <select formControlName="dest_name" id="DelTimet" class="form-control" >
+                        <option *ngFor="let d of dest" [value]='d.id'>{{d.dest_name}}</option>       
+                    </select><br>
+                </div>
+                <div class="row">
+                    <label for="departures">Choose Departure:</label>
+                    <select formControlName="departure" id="delDp" class="form-control">  
+                        <option *ngFor="let t of times2" [value]='t.id'>{{t.deptype}} {{t.departure}}</option>   
+                    </select><br>
+                </div>
+                <div class="row">
+                    <div class="col-6" style="width:20%;">
+                        <button type="submit" class="btn-lg del"> <mat-icon>delete_outline</mat-icon> </button> 
+                    </div>  
+                    <div class="col-6" style="width:80%;" id="alert">
+                    {{ er }}
+                    </div>
+                </div>
+            </form>
+               
+            
          </div>
 
 
-         <div class="col-4">
+         <div class="col-4" style="width:38%;">
             <h4>MANAGE DEPARTURE TIME</h4>
             <div class="times">
                 <p>Here you can add departure time to make timetable for chosen destination</p>
@@ -83,32 +117,81 @@
                     </select><br>
                     <label for="times">Departure time:</label>
                     <input  formControlName="departure" placeholder="Add departure time...." type="time" id="addtime"/><br>
-                    <button class="btn-lg btn-outline-primary" type="submit"  >Add new</button>
+                   <button class="btn-lg add" type="submit"  >Add <mat-icon>add_alarm</mat-icon></button>
+                    
                 </form>
                 <p>If departure time is deleted, all connected data will also be deleted from the destinations timetable!<br>
-                To add departure time to destinations timetable click "make new timetable" </p>
+                To add departure time to destinations timetable go to "make new timetable" section </p>
                 <form [formGroup]="delDepForm" (ngSubmit)="deleteTime()"  id="delDept"> 
-                    <label  id="dep" for="departures">Choose departure to delete:</label>
+                    <label  class="dep" for="departures">Choose departure to delete:</label>
                     <select formControlName="id">
                         <option disabled>All Departures</option>    
                             <option *ngFor="let t of times2" [value]='t.id'>{{t.deptype}} {{t.departure}}</option>   
                     </select><br>
-                    <button type="submit" class="btn-lg btn-outline-primary">Delete</button>
+                    {{eror}}
+                    <button type="submit" id ="delTime" class="btn-lg del"> <mat-icon>delete_forever</mat-icon> </button>
                 </form>
             </div>
-
-            
-
-
-
-
-
-
-
-
-
-
-
+            <h4>MANAGE TICKET TYPES</h4>
+            <p>Here you can add new ticket type and deactivate ones you dont want to use.</p>
+        <div id="typetable">
+            <table class="infotable">
+                <thead>
+                    <th>Ticket type</th>
+                    <th>Zone</th>
+                    <th>Price</th>
+                    <th>Active</th>
+                </thead>
+                <tbody *ngFor='let type of ticket_types'>
+                    <tr>
+                        <td>{{type.tickettype}}  </td>
+                        <td *ngIf="type.zone==1"> Suburbs</td>
+                        <td *ngIf="type.zone==2"> City Center</td>
+                        <td>{{type.ticket_price}} hrk</td>
+                        <td *ngIf="type.active">
+                            <input type="checkbox" checked value="true" (change)="onChange(type.id, true)" >    
+                        </td>
+                        <td *ngIf="!type.active">
+                                <input type="checkbox" value="false" (change)="onChange(type.id, false)">    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+            </div>
+            <button type="submit" (click) = "showtypeModal()" id="ttypebutton" class="btn-lg new"> <mat-icon>library_add</mat-icon> Add new</button>
+    
+      
+              
+    <!-- ADD NEW TICKET TYPE MODAL ------------>       
+            <div [style.display]="typeModal ? 'grid' : 'none'" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-content" id="typemodal">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="myModalLabel">New ticket type
+                        <button type="button" class="btn-dark" class="updatex" data-dismiss="modal" (click) = "hide()">x</button>
+                        </h2>
+                    </div>
+              <form [formGroup]="NewTypeForm" id="NewTypeForm" (ngSubmit)="NewTicketType()"> 
+                 <div class="row">   
+                    <label for="type" class="tic">Ticket type:</label>
+                        <select class="tic" formControlName="tickettype" class="form-control">
+                            <option>day</option> 
+                            <option>2h</option>        
+                        </select><br>
+                </div>
+                <div class="row">
+                <label for="type" class="tic">Zone:</label>
+                    <select class="tic" formControlName="zone" class="form-control">
+                        <option>1</option> <option>2</option>        
+                    </select><br>
+                </div>
+                <div class="row">
+                    <label for="price" class="tic">Ticket price:</label>
+                    <input class="tic" formControlName="ticket_price" type="text"/>
+                </div>
+                <button type="submit" id="addt" class="btn"> Add</button> 
+            </form>
+            </div>
+        </div>
         </div>
 <!-- MODAL FOR DESTINATION EDITING -->
         <div [style.display]="showModal ? 'grid' : 'none'" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -116,27 +199,27 @@
             <div class="modal-content">
                 <div class="modal-header">
                 <h2 class="modal-title" id="myModalLabel">Edit destination
-                <button type="button" class="btn-dark" id="updatex" data-dismiss="modal" (click) = "hide()">x</button>
+                <button type="button" class="btn-dark" class="updatex" data-dismiss="modal" (click) = "hide()">x</button>
                 </h2>
                 </div>
-                <form [formGroup]="destForm" (ngSubmit)="UpdateDest(onedest.id)"> 
-                    <div class="form-group row">
+                <form [formGroup]="destForm" id="destForm" (ngSubmit)="UpdateDest(onedest.id)"> 
+                    <div class="row">
                         <label class="col-6">Full destination name:</label>
                         <input *ngIf="showModal" [value]="onedest.dest_name" [(ngModel)]="onedest.dest_name" type="text" formControlName="dest_name" class="form-control col-4"/>          
                     </div>
-                    <div class="form-group row">
+                    <div class="row">
                                 <label class="col-12">Zone number:</label>
                             <input *ngIf="showModal" [value]="onedest.zone" [(ngModel)]="onedest.zone" type="text" formControlName="zone" class="form-control col-4" />
                     </div> 
-                    <div class="form-group row">
+                    <div class="row">
                         <label class="col-12">Line number:</label>
                     <input *ngIf="showModal" [value]="onedest.line_no"  [(ngModel)]="onedest.line_no" type="text" formControlName="line_no" class="form-control col-4" />
                     </div>    
-                    <div class="form-group row">
+                    <div class="row">
                         <label class="col-12">Starting station:</label>
                     <input *ngIf="showModal" [value]="onedest.dfrom"  [(ngModel)]="onedest.dfrom" type="text" formControlName="dfrom" class="form-control col-4" />
                     </div> 
-                    <div class="form-group row">
+                    <div class="row">
                         <label class="col-12">Finishing station:</label>
                     <input *ngIf="showModal" [value]="onedest.dto"  [(ngModel)]="onedest.dto" type="text" formControlName="dto"  />
                     </div> 
@@ -145,7 +228,7 @@
                         <input *ngIf="showModal" type="checkbox" [value]="onedest.active"  [(ngModel)]="onedest.active" formControlName="active"/>      
                     </div> 
 
-                        <button [disabled]="!destForm.valid" type="submit" id="update" class="btn">Update</button>
+                        <button [disabled]="!destForm.valid" type="submit" class="update" class="btn">Update</button>
                 </form>
             
             </div>
@@ -153,15 +236,15 @@
         </div>
 
 <!-- ADD NEW DESTINATION MODAL ------------>
-        <div class="modal" [style.display]="modalAdd ? 'grid' : 'none'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal" [style.display]="modalAdd ? 'block' : 'none'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                 <h2 class="modal-title" id="myModalLabel"> New destination
-                <button type="button" class="btn" id="update" data-dismiss="modal" (click) = "hide()">x</button>
+                <button type="button" class="btn" class="update" data-dismiss="modal" (click) = "hide()">x</button>
                 </h2>
                 </div>
-                <form [formGroup]="NewDestForm" (ngSubmit)="AddDest()"> 
+                <form id="newDest" [formGroup]="NewDestForm" (ngSubmit)="AddDest()"> 
                     <div class="form-group row">
                         <label class="col-6">Full destination name:</label>
                         <input  type="text" formControlName="dest_name" class="form-control col-4"/>          
@@ -182,12 +265,12 @@
                         <label class="col-12">Finishing station:</label>
                     <input type="text" formControlName="dto"  />
                     </div> 
-                    <div class="form group">
+                    <div class="form-group">
                         <label>Active:</label>
                         <input type="checkbox" formControlName="active"/>      
                     </div> 
 
-                        <button [disabled]="!NewDestForm.valid" type="submit" id="update" class="btn">Add</button>
+                        <button [disabled]="!NewDestForm.valid" type="submit" class="update" class="btn">Add</button>
                 </form>
             
             </div>

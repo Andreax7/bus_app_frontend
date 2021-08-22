@@ -14,6 +14,8 @@ import { TimetableService } from './timetable.service';
 export class TimetableComponent implements OnInit {
   dests?: Dests[];
   times?: Time[];
+  working_d?: Array<string> = [];
+  holidays?: Array<string> = [];
   showTimetable = false;
 
   

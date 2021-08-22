@@ -67,10 +67,9 @@ export class UserPanelComponent implements OnInit {
  getmyData(){
    this.auth.myprofiledata().subscribe(
      response =>{
-       this.user=response;
-  
+       this.user=response; 
      }
-   )
+   );
  }
 }
 

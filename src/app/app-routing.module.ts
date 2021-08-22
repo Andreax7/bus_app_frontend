@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'timetable', component: TimetableComponent },
-  { path: 'profile', component: UserPanelComponent, canActivate : [AuthGuard] },
+  { path: 'profile', component: UserPanelComponent, canActivate : [AuthGuard], canLoad : [AuthGuard] },
   { path: 'admin', component: AdminPanelComponent, canActivate : [AuthGuard], canLoad : [AuthGuard] },
   { path: 'users', component: UsersComponent, canActivate : [AuthGuard] },
 ];
